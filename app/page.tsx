@@ -2,11 +2,8 @@ import Image from "next/image";
 import { Suspense } from "react";
 import CountdownTimer from "./components/CountdownTimer";
 
-// Import the CountdownTimer with dynamic loading and no SSR to ensure it runs on client
-
 export default function Home() {
-  // Set your wedding date here
-  const weddingDate = new Date("2026-05-15");
+  const weddingDate = new Date("2026-05-15T16:00:00");
 
   return (
     <div className="grid grid-cols-12 min-h-svh">

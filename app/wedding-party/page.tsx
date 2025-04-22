@@ -55,18 +55,19 @@ export default function WeddingParty() {
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {bridesmaids.map((person, index) => (
+
               <div
                 key={index}
-                className="bg-white rounded-lg shadow-md overflow-hidden"
+                className="relative group"
               >
-                <div className="bg-pink-100 h-48 flex items-center justify-center">
+                <h3 className="font-serif font-semibold text-2xl relative inline-block translate-y-4 translate-x-3 px-1 bg-black z-10">{person.name}</h3>
+                <div className="h-56 border-2 border-dashed border-pink-200 rounded-lg flex items-center justify-center">
                   <div className="w-24 h-24 rounded-full bg-pink-200 flex items-center justify-center text-pink-500">
                     {person.name.charAt(0)}
                   </div>
                 </div>
-                <div className="p-4 text-center">
-                  <h3 className="font-semibold text-lg">{person.name}</h3>
-                  <p className="text-pink-500 font-medium">{person.role}</p>
+                <div className="px-6 py-2 text-right relative">
+                  <p className="text-pink-500 font-medium text-lg mt-2">{person.role}</p>
                   <p className="text-gray-600 text-sm">{person.relation}</p>
                 </div>
               </div>
@@ -80,16 +81,16 @@ export default function WeddingParty() {
             {groomsmen.map((person, index) => (
               <div
                 key={index}
-                className="bg-white rounded-lg shadow-md overflow-hidden"
+                className="relative group"
               >
-                <div className="bg-blue-100 h-48 flex items-center justify-center">
+                <h3 className="font-serif font-semibold text-2xl relative inline-block translate-y-4 translate-x-3 px-1 bg-black z-10">{person.name}</h3>
+                <div className="h-48 border-2 border-blue-200 border-dashed rounded-lg flex items-center justify-center">
                   <div className="w-24 h-24 rounded-full bg-blue-200 flex items-center justify-center text-blue-500">
                     {person.name.charAt(0)}
                   </div>
                 </div>
-                <div className="p-4 text-center">
-                  <h3 className="font-semibold text-lg">{person.name}</h3>
-                  <p className="text-blue-500 font-medium">{person.role}</p>
+                <div className="px-6 py-2 text-right relative">
+                  <p className="text-blue-500 font-medium text-lg mt-2">{person.role}</p>
                   <p className="text-gray-600 text-sm">{person.relation}</p>
                 </div>
               </div>

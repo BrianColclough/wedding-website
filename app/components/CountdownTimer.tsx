@@ -22,29 +22,32 @@ export default function CountdownTimer({ weddingDate }: CountdownTimerProps) {
   });
 
   useEffect(() => {
-    const calculateTimeLeft = () => {
-      const difference = weddingDate.getTime() - new Date().getTime();
+    const weddingTime = weddingDate.getTime();
+    let timerId: ReturnType<typeof setInterval>;
 
-      if (difference > 0) {
-        const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-        const hours = Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        const minutes = Math.floor(
-          (difference % (1000 * 60 * 60)) / (1000 * 60)
-        );
-        const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+    const updateTimer = () => {
+      const now = Date.now();
+      const difference = weddingTime - now;
 
-        setTimeLeft({ days, hours, minutes, seconds });
-      } else {
+      if (difference <= 0) {
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        clearInterval(timerId);
+        return;
       }
+
+      const totalSeconds = Math.floor(difference / 1000);
+      const days = Math.floor(totalSeconds / 86400);
+      const hours = Math.floor((totalSeconds % 86400) / 3600);
+      const minutes = Math.floor((totalSeconds % 3600) / 60);
+      const seconds = totalSeconds % 60;
+
+      setTimeLeft({ days, hours, minutes, seconds });
     };
 
-    calculateTimeLeft();
-    const timer = setInterval(calculateTimeLeft, 1000);
+    updateTimer();
+    timerId = setInterval(updateTimer, 1000);
 
-    return () => clearInterval(timer);
+    return () => clearInterval(timerId);
   }, [weddingDate]);
 
   return (
