@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { Suspense } from "react";
 import CountdownTimer from "./components/CountdownTimer";
 
 export default function Home() {
@@ -34,11 +33,7 @@ export default function Home() {
             <h2 className="text-center text-xl font-semibold mb-4">
               Countdown to Our Big Day
             </h2>
-            <Suspense
-              fallback={<div className="text-center">Loading countdown...</div>}
-            >
-              <CountdownTimer weddingDate={weddingDate} />
-            </Suspense>
+            <CountdownTimer weddingDate={weddingDate} />
           </div>
 
           <div className="mt-4 animate-bounce">

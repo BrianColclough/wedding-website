@@ -21,6 +21,7 @@ const Navigation = () => {
     { href: "/wedding-party", label: "Meet the Wedding Party" },
     { href: "/rsvp", label: "RSVP" },
     { href: "/registry", label: "Registry" },
+    { href: "/guest-list", label: "Guest List" },
   ];
 
   return (
