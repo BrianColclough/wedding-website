@@ -2,8 +2,17 @@
 
 import { ChangeEvent, useActionState, useState } from "react";
 
+type RSVPForm = {
+  name: string;
+  email: string;
+  attending: "yes" | "no";
+  guests: number;
+  dietaryRestrictions: string;
+  message: string;
+};
+
 export default function RSVP() {
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RSVPForm>({
     name: "",
     email: "",
     attending: "yes",
@@ -23,8 +32,7 @@ export default function RSVP() {
   };
 
   const [isSubmitted, submitAction] = useActionState(
-    async (previousState: any, formData: any) => {
-      //   const error = await
+    async (previousState: boolean, formData: FormData) => {
       console.log(
         "Form submitted:",
         formData.get("name"),
@@ -60,7 +68,7 @@ export default function RSVP() {
             </svg>
             <h2 className="text-2xl font-semibold mb-2">Thank You!</h2>
             <p className="text-gray-600">
-              Your RSVP has been received. We're looking forward to celebrating
+              Your RSVP has been received. We&apos;re looking forward to celebrating
               with you!
             </p>
           </div>
@@ -118,7 +126,7 @@ export default function RSVP() {
                     onChange={handleChange}
                     className="h-4 w-4 text-blue-600"
                   />
-                  <span className="ml-2">Yes, I'll be there!</span>
+                  <span className="ml-2">Yes, I&apos;ll be there!</span>
                 </label>
 
                 <label className="inline-flex items-center">
@@ -130,7 +138,7 @@ export default function RSVP() {
                     onChange={handleChange}
                     className="h-4 w-4 text-blue-600"
                   />
-                  <span className="ml-2">Sorry, I can't make it</span>
+                  <span className="ml-2">Sorry, I can&apos;t make it</span>
                 </label>
               </div>
             </div>

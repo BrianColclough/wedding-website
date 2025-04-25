@@ -1,8 +1,16 @@
 import Navigation from "@/app/components/Navigation";
-import { Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
 
 export const metadata = {
   title: "Brian & Alexis Wedding",
@@ -16,10 +24,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-svh">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-svh`}>
         <Navigation />
         {children}
       </body>
-    </html>
+    </html >
   );
 }

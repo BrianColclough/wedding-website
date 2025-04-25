@@ -23,7 +23,6 @@ export default function CountdownTimer({ weddingDate }: CountdownTimerProps) {
 
   useEffect(() => {
     const weddingTime = weddingDate.getTime();
-    let timerId: ReturnType<typeof setInterval>;
 
     const updateTimer = () => {
       const now = Date.now();
@@ -45,7 +44,7 @@ export default function CountdownTimer({ weddingDate }: CountdownTimerProps) {
     };
 
     updateTimer();
-    timerId = setInterval(updateTimer, 1000);
+    const timerId = setInterval(updateTimer, 1000);
 
     return () => clearInterval(timerId);
   }, [weddingDate]);

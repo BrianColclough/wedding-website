@@ -27,7 +27,7 @@ export default function Home() {
           </h1>
 
           <div className="text-xl md:text-2xl font-medium bg-white/10 px-6 py-3 rounded-lg backdrop-blur-md mb-8">
-            We're getting married!
+            We&apos;re getting married!
           </div>
 
           <div className="w-full max-w-md bg-white/10 rounded-lg backdrop-blur-md p-4 mb-6">
