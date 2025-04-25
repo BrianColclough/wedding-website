@@ -12,6 +12,20 @@
   --font-mono: var(--font-geist-mono);
 }
 
+@theme {
+  /* Periwinkle palette generated from #d3d3ff */
+  --color-periwinkle-100: #f5f5ff;
+  --color-periwinkle-200: #e0e0ff;
+  --color-periwinkle-300: #c2c2ff;
+  --color-periwinkle-400: #a3a3ff;
+  --color-periwinkle-500: #8484ff;
+  --color-periwinkle-600: #6565ea;
+  --color-periwinkle-700: #4b4bb8;
+  --color-periwinkle-800: #313182;
+  --color-periwinkle-900: #1a1a48;
+  --color-periwinkle-950: #0d0d22;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;

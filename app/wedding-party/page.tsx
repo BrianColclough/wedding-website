@@ -2,36 +2,36 @@ export default function WeddingParty() {
   // Placeholder data - replace with actual wedding party details
   const bridesmaids = [
     {
-      name: "Jane Smith",
+      name: "Oliva Rogers",
       role: "Maid of Honor",
       relation: "Sister of the Bride",
       image: "/placeholder-woman.jpg",
     },
     {
-      name: "Emma Johnson",
+      name: "Brielle Smith",
       role: "Bridesmaid",
-      relation: "Friend of the Bride",
+      relation: "Sister of the Bride",
       image: "/placeholder-woman.jpg",
     },
     {
-      name: "Sophie Williams",
+      name: "Meredith Wilson",
       role: "Bridesmaid",
-      relation: "College Roommate",
+      relation: "Something",
       image: "/placeholder-woman.jpg",
     },
   ];
 
   const groomsmen = [
     {
-      name: "John Doe",
+      name: "Chris Colclough",
       role: "Best Man",
       relation: "Brother of the Groom",
       image: "/placeholder-man.jpg",
     },
     {
-      name: "Michael Brown",
+      name: "Patrick Winner",
       role: "Groomsman",
-      relation: "Friend of the Groom",
+      relation: "Brother of the Bride",
       image: "/placeholder-man.jpg",
     },
     {
@@ -50,7 +50,7 @@ export default function WeddingParty() {
 
       <div className="max-w-5xl mx-auto">
         <div className="mb-10">
-          <h2 className="text-2xl font-semibold text-center mb-6">
+          <h2 className="text-2xl text-periwinkle-300 font-semibold text-center mb-6">
             Bridesmaids
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
@@ -61,13 +61,13 @@ export default function WeddingParty() {
                 className="relative group"
               >
                 <h3 className="font-serif font-semibold text-2xl relative inline-block translate-y-4 translate-x-3 px-1 bg-black z-10">{person.name}</h3>
-                <div className="h-56 border-2 border-dashed border-pink-200 rounded-lg flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-pink-200 flex items-center justify-center text-pink-500">
+                <div className="h-56 border-2 border-dashed border-periwinkle-300 rounded-lg flex items-center justify-center">
+                  <div className="w-24 h-24 rounded-full bg-pink-200 flex items-center justify-center">
                     {person.name.charAt(0)}
                   </div>
                 </div>
                 <div className="px-6 py-2 text-right relative">
-                  <p className="text-pink-500 font-medium text-lg mt-2">{person.role}</p>
+                  <p className="text-periwinkle-500 font-medium text-lg mt-2">{person.role}</p>
                   <p className="text-gray-600 text-sm">{person.relation}</p>
                 </div>
               </div>
