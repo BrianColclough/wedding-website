@@ -47,7 +47,7 @@ export default function SearchableGuestList() {
       <div className="max-w-3xl mx-auto p-6">
         <div className="backdrop-blur-sm bg-black/30 rounded-xl shadow-lg border border-periwinkle-700/30 p-8">
           {/* Header */}
-          <div className="text-center mb-8 animate-fade-in-down">
+          <div className="text-center mb-8">
             <h1 className="text-3xl font-bold mb-2 text-white">Guest List</h1>
             <div className="w-16 h-0.5 mx-auto bg-periwinkle-400 rounded-full"></div>
           </div>
@@ -101,11 +101,10 @@ export default function SearchableGuestList() {
                 {filtered.length} guest{filtered.length !== 1 ? "s" : ""} found
               </p>
               <ul className="space-y-2">
-                {filtered.map((guest, index) => (
+                {filtered.map((guest) => (
                   <li
                     key={guest.id}
-                    className="p-3 border border-periwinkle-700/20 rounded-lg bg-black/20 hover:bg-periwinkle-900/40 transition-all duration-200 animate-fade-in"
-                    style={{ animationDelay: `${index * 50}ms` }}
+                    className="p-3 border border-periwinkle-700/20 rounded-lg bg-black/20 "
                   >
                     <div className="flex justify-between items-center">
                       <div>
@@ -153,7 +152,7 @@ export default function SearchableGuestList() {
                 />
               </svg>
               <p className="text-periwinkle-300/80">
-                No guests found matching "{searchTerm}"
+                No guests found matching &quot;{searchTerm}&quot;
               </p>
               <button
                 onClick={() => setSearchTerm("")}
@@ -179,32 +178,3 @@ export default function SearchableGuestList() {
     </div>
   );
 }
-
-// Add these Tailwind animations to your tailwind.config.js
-// or they can be included inline with CSS keyframes in this file
-const tailwindCustomAnimations = {
-  keyframes: {
-    "fade-in-down": {
-      "0%": {
-        opacity: "0",
-        transform: "translateY(-10px)",
-      },
-      "100%": {
-        opacity: "1",
-        transform: "translateY(0)",
-      },
-    },
-    "fade-in": {
-      "0%": {
-        opacity: "0",
-      },
-      "100%": {
-        opacity: "1",
-      },
-    },
-  },
-  animation: {
-    "fade-in-down": "fade-in-down 0.5s ease-out",
-    "fade-in": "fade-in 0.3s ease-out",
-  },
-};
