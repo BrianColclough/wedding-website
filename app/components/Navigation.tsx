@@ -29,13 +29,13 @@ const Navigation = () => {
       {/* Mobile Navigation */}
       <nav className="fixed top-0 w-full bg-black backdrop-blur-md z-50 shadow-sm">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <Link href="/" className="text-xl font-semibold" onClick={closeMenu}>
+          <Link href="/" className="text-xl text-white font-semibold" onClick={closeMenu}>
             B & A
           </Link>
 
           {/* Hamburger Button */}
           <button
-            className="md:hidden p-2 focus:outline-none"
+            className="md:hidden p-2 focus:outline-none text-white"
             onClick={toggleMenu}
             aria-label="Toggle menu"
           >
@@ -44,8 +44,8 @@ const Navigation = () => {
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
+              stroke="white"
+              className="w-6 h-6 text-white"
             >
               {isMenuOpen ? (
                 <path
