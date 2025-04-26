@@ -24,6 +24,18 @@
   --color-periwinkle-800: #313182;
   --color-periwinkle-900: #1a1a48;
   --color-periwinkle-950: #0d0d22;
+
+  --color-amber-100: #fff9e5;
+  --color-amber-200: #ffeeb2;
+  --color-amber-300: #ffe37f;
+  --color-amber-400: #fed84c;
+  --color-amber-500: #ffcd19;
+  --color-amber-600: #e5b300;
+  --color-amber-700: #b28b00;
+  --color-amber-800: #7f6300;
+  --color-amber-900: #4c3b00;
+  --color-amber-950: #191300;
+
 }
 
 @media (prefers-color-scheme: dark) {

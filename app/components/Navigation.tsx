@@ -69,7 +69,7 @@ const Navigation = () => {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-gray-200 hover:text-white hover:decoration-2 hover:underline hover:decoration-amber-400 transition duration-300"
+                className="text-white hover:decoration-2 hover:underline hover:decoration-periwinkle-400 transition duration-300"
               >
                 {link.label}
               </Link>
@@ -85,7 +85,7 @@ const Navigation = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="px-4 py-3 text-gray-200 hover:decoration-2 hover:underline hover:decoration-amber-400 transition duration-300"
+                  className="px-4 py-3 text-white hover:decoration-2 hover:underline hover:decoration-amber-400 transition duration-300"
                   onClick={closeMenu}
                 >
                   {link.label}
