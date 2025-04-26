@@ -1,5 +1,6 @@
 "use client";
 
+import LoadingSpinner from "@/app/components/LoadingSpinner";
 import { createClient } from "@/utils/supabase/client";
 import { useDeferredValue, useEffect, useState } from "react";
 
@@ -86,12 +87,7 @@ export default function SearchableGuestList() {
 
           {/* Loading State */}
           {loading && (
-            <div className="flex justify-center items-center py-12">
-              <span className="flex items-center gap-2">
-                <div className="rounded-full h-6 w-6 bg-gradient-to-r from-periwinkle-400 to-periwinkle-700 animate-spin"></div>
-                <span>Loading Guests...</span>
-              </span>
-            </div>
+            <LoadingSpinner message="Loading Guests..." />
           )}
 
           {/* Guest List */}

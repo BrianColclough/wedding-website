@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import LoadingSpinner from "./LoadingSpinner";
 
 interface TimeLeft {
   days: number;
@@ -14,6 +15,7 @@ interface CountdownTimerProps {
 }
 
 export default function CountdownTimer({ weddingDate }: CountdownTimerProps) {
+  const [loading, setLoading] = useState(true);
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({
     days: 0,
     hours: 0,
@@ -30,6 +32,7 @@ export default function CountdownTimer({ weddingDate }: CountdownTimerProps) {
 
       if (difference <= 0) {
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        setLoading(false);
         clearInterval(timerId);
         return;
       }
@@ -41,6 +44,7 @@ export default function CountdownTimer({ weddingDate }: CountdownTimerProps) {
       const seconds = totalSeconds % 60;
 
       setTimeLeft({ days, hours, minutes, seconds });
+      setLoading(false);
     };
 
     updateTimer();
@@ -48,6 +52,10 @@ export default function CountdownTimer({ weddingDate }: CountdownTimerProps) {
 
     return () => clearInterval(timerId);
   }, [weddingDate]);
+
+  if (loading) {
+    return <LoadingSpinner message="Calculating time remaining..." />;
+  }
 
   return (
     <div className="flex justify-center flex-wrap">
