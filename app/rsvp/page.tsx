@@ -46,7 +46,7 @@ export default function RSVP() {
   );
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto bg-black text-white px-4 py-8">
       <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">RSVP</h1>
 
       <div className="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6 md:p-8">

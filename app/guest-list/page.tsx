@@ -44,7 +44,7 @@ export default function SearchableGuestList() {
   );
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)] bg-black pt-8 pb-16">
+    <div className="min-h-[calc(100vh-3.5rem)] bg-black text-white pt-8 pb-16">
       <div className="max-w-3xl mx-auto p-6">
         <div className="backdrop-blur-sm bg-black/30 rounded-xl shadow-lg border border-periwinkle-700/30 p-8">
           {/* Header */}
