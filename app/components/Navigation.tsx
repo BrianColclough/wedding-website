@@ -29,7 +29,11 @@ const Navigation = () => {
       {/* Mobile Navigation */}
       <nav className="fixed top-0 w-full bg-black backdrop-blur-md z-50 shadow-sm">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
-          <Link href="/" className="text-xl text-white font-semibold" onClick={closeMenu}>
+          <Link
+            href="/"
+            className="text-xl text-white font-semibold"
+            onClick={closeMenu}
+          >
             B & A
           </Link>
 
@@ -97,7 +101,7 @@ const Navigation = () => {
       </nav>
 
       {/* Spacer to prevent content from hiding behind fixed navbar */}
-      <div className="h-14"></div>
+      <div className="h-14 bg-black"></div>
     </>
   );
 };
