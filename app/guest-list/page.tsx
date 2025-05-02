@@ -86,9 +86,7 @@ export default function SearchableGuestList() {
           </div>
 
           {/* Loading State */}
-          {loading && (
-            <LoadingSpinner message="Loading Guests..." />
-          )}
+          {loading && <LoadingSpinner message="Loading Guests..." />}
 
           {/* Guest List */}
           {!loading && filtered.length > 0 && (
