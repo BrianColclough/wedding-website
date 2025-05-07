@@ -2,7 +2,7 @@ export default function WeddingParty() {
   // Placeholder data - replace with actual wedding party details
   const bridesmaids = [
     {
-      name: "Oliva Rogers",
+      name: "Olivia Rogers",
       role: "Maid of Honor",
       relation: "Sister of the Bride",
       image: "/placeholder-woman.jpg",
@@ -16,7 +16,7 @@ export default function WeddingParty() {
     {
       name: "Meredith Wilson",
       role: "Bridesmaid",
-      relation: "Something",
+      relation: "Sister of the Bride",
       image: "/placeholder-woman.jpg",
     },
   ];
