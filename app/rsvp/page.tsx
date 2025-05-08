@@ -33,7 +33,7 @@ export default function RSVP() {
   const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -116,6 +116,29 @@ export default function RSVP() {
   return (
     <div className="container mx-auto bg-black text-white px-4 py-8">
       <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">RSVP</h1>
+      <div className="w-full flex items-center justify-center mb-4">
+        <div className="flex flex-col gap-4 sm:text-lg max-w-3xl items-center text-gray-200">
+          <p>
+            We&apos;re counting down to the big day, and we hope you can make it!
+          </p>
+          <p>
+            Please RSVP by March 1st to confirm your attendance. Let us know if
+            you&apos;ll be bringing a guest, if you&apos;d like to stay in the hotel
+            block, and if you&apos;re interested in being shuttled from the venue
+            back to the hotel the night of the wedding!
+          </p>
+
+          <p>
+            If you plan on drinking, we highly recommend taking the shuttle back
+            to the hotel - we want all of our guests to be safe!
+          </p>
+          <p>
+            Don&apos;t forget to leave us a message if you&apos;d like! To confirm your
+            RSVP status, please visit the Guest List page to search for your
+            name.
+          </p>
+        </div>
+      </div>
 
       <div className="max-w-lg mx-auto bg-white text-gray-800 rounded-lg shadow-md p-6 md:p-8">
         {isSubmitted ? (

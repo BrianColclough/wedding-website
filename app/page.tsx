@@ -58,7 +58,7 @@ export default function Home() {
       </div>
       <div className="flex flex-col items-center justify-center">
         <div className="col-span-12">
-          <h2 className="text-center text-4xl font-bold text-periwinkle-300 mt-12 mb-2">Friday May 15, 2026</h2>
+          <h2 className="text-center text-4xl font-bold text-periwinkle-300 mt-12 mb-2">Friday, May 15, 2026</h2>
           <div className="w-32 h-0.5 mx-auto bg-periwinkle-400 rounded-full mb-8"></div>
           <div className="text-center text-gray-200 max-w-3xl flex flex-col gap-6 mb-12 mx-4 sm:mx-0">
             <p>
