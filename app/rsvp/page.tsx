@@ -72,7 +72,6 @@ export default function RSVP() {
     try {
       const supabase = await createClient();
 
-      // Insert main guest
       if (formData.attending) {
         const { error: mainGuestError } = await supabase
           .from("Guest List")
@@ -115,36 +114,32 @@ export default function RSVP() {
 
   return (
     <div className="container mx-auto bg-black text-white px-4 py-8">
-      <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">RSVP</h1>
-      <div className="w-full flex items-center justify-center mb-4">
-        <div className="flex flex-col gap-4 sm:text-lg max-w-3xl items-center text-gray-200">
-          <p>
-            We&apos;re counting down to the big day, and we hope you can make it!
-          </p>
-          <p>
-            Please RSVP by March 1st to confirm your attendance. Let us know if
-            you&apos;ll be bringing a guest, if you&apos;d like to stay in the hotel
-            block, and if you&apos;re interested in being shuttled from the venue
-            back to the hotel the night of the wedding!
-          </p>
-
-          <p>
-            If you plan on drinking, we highly recommend taking the shuttle back
-            to the hotel - we want all of our guests to be safe!
-          </p>
-          <p>
-            Don&apos;t forget to leave us a message if you&apos;d like! To confirm your
-            RSVP status, please visit the Guest List page to search for your
-            name.
-          </p>
+      <div className="w-full flex items-center justify-center pb-8">
+        <div className="backdrop-blur-sm bg-black/30 rounded-xl shadow-lg border border-periwinkle-700/30 p-8 w-full max-w-2xl mx-auto">
+          <div className="text-center mb-6">
+            <h1 className="text-4xl font-bold text-white mb-2 tracking-tight">RSVP</h1>
+            <div className="w-16 h-0.5 mx-auto bg-periwinkle-400 rounded-full mb-3"></div>
+            <h2 className="text-lg font-semibold text-gray-200 mb-2">
+              We&apos;re counting down to the big day, and we hope you can make it!
+            </h2>
+            <p className="font-light text-periwinkle-200 mb-1">
+              Please RSVP by March 1st to confirm your attendance. Let us know if you&apos;ll be bringing a guest, if you&apos;d like to stay in the hotel block, and if you&apos;re interested in being shuttled from the venue back to the hotel the night of the wedding!
+            </p>
+            <p className="font-light text-periwinkle-200 mb-1">
+              If you plan on drinking, we highly recommend taking the shuttle back to the hotel - we want all of our guests to be safe!
+            </p>
+            <p className="font-light text-periwinkle-200">
+              Don&apos;t forget to leave us a message if you&apos;d like! To confirm your RSVP status, please visit the Guest List page to search for your name.
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-lg mx-auto bg-white text-gray-800 rounded-lg shadow-md p-6 md:p-8">
+      <div className="backdrop-blur-sm bg-black/30 rounded-xl shadow-lg border border-periwinkle-700/30 p-8 w-full max-w-lg mx-auto -translate-y-4">
         {isSubmitted ? (
           <div className="text-center py-8">
             <svg
-              className="w-16 h-16 text-green-500 mx-auto mb-4"
+              className="w-16 h-16 text-green-400 mx-auto mb-4 drop-shadow-lg"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -157,16 +152,16 @@ export default function RSVP() {
                 d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
               />
             </svg>
-            <h2 className="text-2xl font-semibold mb-2">Thank You!</h2>
-            <p className="text-gray-600">
+            <h2 className="text-2xl font-semibold mb-2 text-white">Thank You!</h2>
+            <p className="text-periwinkle-200">
               Your RSVP has been received. We&apos;re looking forward to
               celebrating with you!
             </p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {error && (
-              <div className="p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+              <div className="p-3 bg-red-900/30 border border-red-400/40 text-red-300 rounded-lg text-center font-semibold">
                 {error}
               </div>
             )}
@@ -175,7 +170,7 @@ export default function RSVP() {
               <div>
                 <label
                   htmlFor="first_name"
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-semibold text-periwinkle-200 mb-1"
                 >
                   First Name*
                 </label>
@@ -186,7 +181,7 @@ export default function RSVP() {
                   value={formData.first_name}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-black/40 text-white border border-periwinkle-700/50 rounded-md placeholder-periwinkle-300/40"
                   placeholder="First Name"
                 />
               </div>
@@ -195,7 +190,7 @@ export default function RSVP() {
             <div>
               <label
                 htmlFor="last_name"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-semibold text-periwinkle-200 mb-1"
               >
                 Last Name*
               </label>
@@ -206,13 +201,13 @@ export default function RSVP() {
                 value={formData.last_name}
                 onChange={handleInputChange}
                 required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 bg-black/40 text-white border border-periwinkle-700/50 rounded-md placeholder-periwinkle-300/40"
                 placeholder="Last Name"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-semibold text-periwinkle-200 mb-1">
                 Will you be attending?*
               </label>
               <div className="flex space-x-4">
@@ -222,9 +217,9 @@ export default function RSVP() {
                     name="attending"
                     checked={formData.attending}
                     onChange={toggleCheckbox}
-                    className="h-4 w-4 text-blue-600"
+                    className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 rounded"
                   />
-                  <span className="ml-2">Yes, I&apos;ll be there!</span>
+                  <span className="ml-2 text-periwinkle-100 font-medium">Yes, I&apos;ll be there!</span>
                 </label>
               </div>
             </div>
@@ -232,7 +227,7 @@ export default function RSVP() {
             {formData.attending && (
               <>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-sm font-semibold text-periwinkle-200 mb-1">
                     Additional Options
                   </label>
                   <div className="space-y-2">
@@ -242,9 +237,9 @@ export default function RSVP() {
                         name="plusOne"
                         checked={formData.plusOne}
                         onChange={toggleCheckbox}
-                        className="h-4 w-4 text-blue-600"
+                        className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 rounded"
                       />
-                      <span className="ml-2">I&apos;m bringing a plus one</span>
+                      <span className="ml-2 text-periwinkle-100">I&apos;m bringing a plus one</span>
                     </label>
 
                     <label className="inline-flex items-center block">
@@ -253,9 +248,9 @@ export default function RSVP() {
                         name="interested_in_shuttle"
                         checked={formData.interested_in_shuttle}
                         onChange={toggleCheckbox}
-                        className="h-4 w-4 text-blue-600"
+                        className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 rounded"
                       />
-                      <span className="ml-2">
+                      <span className="ml-2 text-periwinkle-100">
                         I&apos;m interested in shuttle transportation
                       </span>
                     </label>
@@ -266,9 +261,9 @@ export default function RSVP() {
                         name="interested_in_hotel_block"
                         checked={formData.interested_in_hotel_block}
                         onChange={toggleCheckbox}
-                        className="h-4 w-4 text-blue-600"
+                        className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 rounded"
                       />
-                      <span className="ml-2">
+                      <span className="ml-2 text-periwinkle-100">
                         I&apos;m interested in the hotel block
                       </span>
                     </label>
@@ -276,15 +271,15 @@ export default function RSVP() {
                 </div>
 
                 {formData.plusOne && (
-                  <div className="border-t border-gray-200 pt-4">
-                    <h3 className="text-md font-medium mb-3">
+                  <div className="border-t border-periwinkle-700/30 pt-4 mt-4">
+                    <h3 className="text-md font-semibold mb-3 text-periwinkle-200">
                       Plus One Information
                     </h3>
                     <div className="space-y-3">
                       <div>
                         <label
                           htmlFor="plusOne_first_name"
-                          className="block text-sm font-medium text-gray-700 mb-1"
+                          className="block text-sm font-semibold text-periwinkle-200 mb-1"
                         >
                           Plus One First Name*
                         </label>
@@ -295,7 +290,7 @@ export default function RSVP() {
                           value={formData.plusOne_first_name}
                           onChange={handleInputChange}
                           required={formData.plusOne}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-3 py-2 bg-black/40 text-white border border-periwinkle-700/50 rounded-md placeholder-periwinkle-300/40"
                           placeholder="First Name"
                         />
                       </div>
@@ -303,7 +298,7 @@ export default function RSVP() {
                       <div>
                         <label
                           htmlFor="plusOne_last_name"
-                          className="block text-sm font-medium text-gray-700 mb-1"
+                          className="block text-sm font-semibold text-periwinkle-200 mb-1"
                         >
                           Plus One Last Name*
                         </label>
@@ -314,7 +309,7 @@ export default function RSVP() {
                           value={formData.plusOne_last_name}
                           onChange={handleInputChange}
                           required={formData.plusOne}
-                          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="w-full px-3 py-2 bg-black/40 text-white border border-periwinkle-700/50 rounded-md placeholder-periwinkle-300/40"
                           placeholder="Last Name"
                         />
                       </div>
@@ -327,7 +322,7 @@ export default function RSVP() {
             <div>
               <label
                 htmlFor="message"
-                className="block text-sm font-medium text-gray-700 mb-1"
+                className="block text-sm font-semibold text-periwinkle-200 mb-1"
               >
                 Message (Optional)
               </label>
@@ -337,7 +332,7 @@ export default function RSVP() {
                 value={formData.message}
                 onChange={handleInputChange}
                 rows={3}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 bg-black/40 text-white border border-periwinkle-700/50 rounded-md placeholder-periwinkle-300/40"
                 placeholder="Any message for the couple"
               />
             </div>
@@ -346,7 +341,7 @@ export default function RSVP() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:bg-blue-300"
+                className="w-full bg-periwinkle-500 text-white font-bold py-2 px-4 rounded-md  hover:bg-amber-500 transition duration-300 focus:outline-none focus:ring-2 focus:ring-periwinkle-400 disabled:bg-periwinkle-700/40 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? "Submitting..." : "Submit RSVP"}
               </button>
