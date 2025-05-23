@@ -17,7 +17,7 @@ const Navigation = () => {
   const links = [
     { href: "/", label: "Home" },
     { href: "/our-story", label: "Our Story" },
-    { href: "/info", label: "Info" },
+    { href: "/need-to-know", label: "Need to Knows" },
     { href: "/wedding-party", label: "Meet the Wedding Party" },
     { href: "/rsvp", label: "RSVP" },
     { href: "/registry", label: "Registry" },

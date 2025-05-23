@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
+import Link from "next/link";
 import { ChangeEvent, useState } from "react";
 
 type RSVPForm = {
@@ -42,6 +43,15 @@ export default function RSVP() {
     }));
   };
 
+  const toggleRadio = (e: ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target);
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === 'attending' ? value === 'true' : value,
+    }));
+  };
+
   const toggleCheckbox = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = e.target;
     setFormData((prev) => ({
@@ -55,6 +65,11 @@ export default function RSVP() {
 
     if (!formData.first_name || !formData.last_name) {
       setError("Please fill in all required fields");
+      return;
+    }
+
+    if (formData.attending === null || formData.attending === undefined) {
+      setError("Please select whether you will be attending");
       return;
     }
 
@@ -122,15 +137,17 @@ export default function RSVP() {
             <h2 className="text-lg font-semibold text-gray-200 mb-2">
               We&apos;re counting down to the big day, and we hope you can make it!
             </h2>
-            <p className="font-light text-periwinkle-200 mb-1">
-              Please RSVP by March 1st to confirm your attendance. Let us know if you&apos;ll be bringing a guest, if you&apos;d like to stay in the hotel block, and if you&apos;re interested in being shuttled from the venue back to the hotel the night of the wedding!
-            </p>
-            <p className="font-light text-periwinkle-200 mb-1">
-              If you plan on drinking, we highly recommend taking the shuttle back to the hotel - we want all of our guests to be safe!
-            </p>
-            <p className="font-light text-periwinkle-200">
-              Don&apos;t forget to leave us a message if you&apos;d like! To confirm your RSVP status, please visit the Guest List page to search for your name.
-            </p>
+            <div className="flex flex-col gap-2 whitespace-break-spaces">
+              <p className="font-light text-periwinkle-200">
+                Please RSVP by March 1st to confirm your attendance! Let us know if you&apos;ll be bringing a guest, if you&apos;d like to reserve a room in our hotel block, and if you&apos;re planning to use the shuttle service.
+              </p>
+              <p className="font-light text-periwinkle-200">
+                A complimentary shuttle will pick up guests from the hotel and take them to the venue before the ceremony, and later that evening, it will bring everyone back to the hotel. If you plan to enjoy drinks at the reception, we strongly encourage taking advantage of the shuttle so everyone can get back safely!
+              </p>
+              <p className="font-light text-periwinkle-200">
+                Don&apos;t forget to leave us a message if you&apos;d like! To confirm your RSVP status, please visit the <Link href="/guest-list" className="text-periwinkle-200 hover:text-periwinkle-300">Guest List</Link> page to search for your name.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -213,13 +230,29 @@ export default function RSVP() {
               <div className="flex space-x-4">
                 <label className="inline-flex items-center">
                   <input
-                    type="checkbox"
+                    type="radio"
                     name="attending"
-                    checked={formData.attending}
-                    onChange={toggleCheckbox}
-                    className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 rounded"
+                    value="true"
+                    checked={formData.attending === true}
+                    onChange={toggleRadio}
+                    required
+                    tabIndex={0}
+                    className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 focus:ring-2"
                   />
                   <span className="ml-2 text-periwinkle-100 font-medium">Yes, I&apos;ll be there!</span>
+                </label>
+                <label className="inline-flex items-center">
+                  <input
+                    type="radio"
+                    name="attending"
+                    value="false"
+                    checked={formData.attending === false}
+                    onChange={toggleRadio}
+                    required
+                    tabIndex={0}
+                    className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 focus:ring-2"
+                  />
+                  <span className="ml-2 text-periwinkle-100 font-medium">No, I won&apos;t be able to attend</span>
                 </label>
               </div>
             </div>
@@ -237,7 +270,8 @@ export default function RSVP() {
                         name="plusOne"
                         checked={formData.plusOne}
                         onChange={toggleCheckbox}
-                        className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 rounded"
+                        tabIndex={0}
+                        className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 focus:ring-2 rounded"
                       />
                       <span className="ml-2 text-periwinkle-100">I&apos;m bringing a plus one</span>
                     </label>
@@ -248,7 +282,8 @@ export default function RSVP() {
                         name="interested_in_shuttle"
                         checked={formData.interested_in_shuttle}
                         onChange={toggleCheckbox}
-                        className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 rounded"
+                        tabIndex={0}
+                        className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 focus:ring-2 rounded"
                       />
                       <span className="ml-2 text-periwinkle-100">
                         I&apos;m interested in shuttle transportation
@@ -261,7 +296,8 @@ export default function RSVP() {
                         name="interested_in_hotel_block"
                         checked={formData.interested_in_hotel_block}
                         onChange={toggleCheckbox}
-                        className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 rounded"
+                        tabIndex={0}
+                        className="h-4 w-4 text-periwinkle-400 bg-black/40 border-periwinkle-700/50 focus:ring-periwinkle-400 focus:ring-2 rounded"
                       />
                       <span className="ml-2 text-periwinkle-100">
                         I&apos;m interested in the hotel block
