@@ -51,6 +51,9 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-input:focus-visible, textarea:focus-visible, select:focus-visible, a:focus-visible {
-  @apply outline-2 outline-amber-400  outline-dotted transition-[box-shadow,border-color] duration-200;
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+a:focus-visible {
+  @apply outline-2 outline-amber-400 outline-dotted transition-all duration-200;
 }
