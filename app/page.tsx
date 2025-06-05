@@ -17,6 +17,7 @@ export default function Home() {
               className="object-cover"
               sizes="100vw"
               quality={90}
+              fetchPriority="high"
             />
             <div className="absolute inset-0 bg-black/30"></div>
           </div>
