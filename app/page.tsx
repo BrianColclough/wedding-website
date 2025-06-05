@@ -10,7 +10,7 @@ export default function Home() {
         <div className="col-span-12 relative">
           <div className="absolute inset-0 z-0">
             <Image
-              src="/Lexi&B.jpg"
+              src="/wedding-hero.webp"
               alt="Brian and Alexis"
               fill
               priority
@@ -18,7 +18,7 @@ export default function Home() {
               sizes="100vw"
               quality={90}
             />
-            <div className="absolute inset-0 bg-black/40"></div>
+            <div className="absolute inset-0 bg-black/30"></div>
           </div>
 
           <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 text-white">

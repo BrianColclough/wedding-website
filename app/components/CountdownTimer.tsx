@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import LoadingSpinner from "./LoadingSpinner";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface TimeLeft {
   days: number;
@@ -14,48 +13,49 @@ interface CountdownTimerProps {
   weddingDate: Date;
 }
 
+// Pure function - can be calculated during render
+function calculateTimeLeft(weddingDate: Date): TimeLeft {
+  const now = Date.now();
+  const difference = weddingDate.getTime() - now;
+
+  if (difference <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  }
+
+  const totalSeconds = Math.floor(difference / 1000);
+  const days = Math.floor(totalSeconds / 86400);
+  const hours = Math.floor((totalSeconds % 86400) / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+
+  return { days, hours, minutes, seconds };
+}
+
 export default function CountdownTimer({ weddingDate }: CountdownTimerProps) {
-  const [loading, setLoading] = useState(true);
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
-  });
+  const [currentTime, setCurrentTime] = useState(Date.now);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const timeLeft = useMemo(() => calculateTimeLeft(weddingDate), [weddingDate, currentTime]);
+
+  const isFinished = timeLeft.days === 0 && timeLeft.hours === 0 &&
+    timeLeft.minutes === 0 && timeLeft.seconds === 0;
 
   useEffect(() => {
-    const weddingTime = weddingDate.getTime();
+    if (isFinished) {
+      return;
+    }
 
-    const updateTimer = () => {
-      const now = Date.now();
-      const difference = weddingTime - now;
+    intervalRef.current = setInterval(() => {
+      setCurrentTime(Date.now());
+    }, 1000);
 
-      if (difference <= 0) {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        setLoading(false);
-        clearInterval(timerId);
-        return;
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
       }
-
-      const totalSeconds = Math.floor(difference / 1000);
-      const days = Math.floor(totalSeconds / 86400);
-      const hours = Math.floor((totalSeconds % 86400) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-
-      setTimeLeft({ days, hours, minutes, seconds });
-      setLoading(false);
     };
-
-    updateTimer();
-    const timerId = setInterval(updateTimer, 1000);
-
-    return () => clearInterval(timerId);
-  }, [weddingDate]);
-
-  if (loading) {
-    return <LoadingSpinner message="Calculating time remaining..." />;
-  }
+  }, [isFinished]);
 
   return (
     <div className="flex justify-center flex-wrap">

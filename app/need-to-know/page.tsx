@@ -3,7 +3,7 @@ export default function Info() {
     <div className="container mx-auto bg-black text-white px-4 py-8">
       {/* Header Section */}
       <div className="text-center mb-8">
-        <h1 className="text-4xl font-bold text-white mb-2 tracking-tight">Need to Know</h1>
+        <h1 className="text-4xl font-bold text-white mb-2 tracking-tight">Need to Knows</h1>
         <div className="w-16 h-0.5 mx-auto bg-periwinkle-400 rounded-full mb-3"></div>
         <p className="text-lg font-light text-periwinkle-200 max-w-2xl mx-auto">
           Everything you need to know to celebrate with us on our special day
