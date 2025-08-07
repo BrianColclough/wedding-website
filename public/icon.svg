@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-label="Brian & Alexis">
+  <defs>
+    <linearGradient id="periwinkleGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#8484ff"/>
+      <stop offset="100%" stop-color="#4b4bb8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" rx="220" fill="url(#periwinkleGradient)"/>
+  <!-- White heart mark for a clean, timeless wedding motif -->
+  <path fill="#ffffff" d="M512 780c-180-120-300-220-300-340 0-90 70-160 160-160 56 0 108 28 140 72 32-44 84-72 140-72 90 0 160 70 160 160 0 120-120 220-300 340z"/>
+</svg>
+
