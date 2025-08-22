@@ -14,130 +14,194 @@ interface StoryData {
 }
 
 export default function OurStory() {
-  // Placeholder data structure - replace with actual photos when available
+  // Generated from images in public/Our story/<year>/[n]_result.(jpg|png)
   const storyData: StoryData = {
     "2021": [
       {
-        imgName: "first-meeting",
-        description: "The beginning of our beautiful journey together. This was taken shortly after we first met.",
-        imageDate: "March 2021",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2021-1",
+        description: "A favorite memory from 2021. Description to be updated.",
+        imageDate: "2021",
+        imgSrc: "/Our story/2021/1_result.jpg"
       },
       {
-        imgName: "spring-walk",
-        description: "Our first spring together, taking long walks and getting to know each other.",
-        imageDate: "April 2021",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2021-2",
+        description: "A favorite memory from 2021. Description to be updated.",
+        imageDate: "2021",
+        imgSrc: "/Our story/2021/2_result.png"
       },
       {
-        imgName: "summer-adventure",
-        description: "Summer adventures and making memories that would last a lifetime.",
-        imageDate: "July 2021",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2021-3",
+        description: "A favorite memory from 2021. Description to be updated.",
+        imageDate: "2021",
+        imgSrc: "/Our story/2021/3_result.jpg"
+      },
+      {
+        imgName: "2021-4",
+        description: "A favorite memory from 2021. Description to be updated.",
+        imageDate: "2021",
+        imgSrc: "/Our story/2021/4_result.png"
+      },
+      {
+        imgName: "2021-5",
+        description: "A favorite memory from 2021. Description to be updated.",
+        imageDate: "2021",
+        imgSrc: "/Our story/2021/5_result.png"
+      },
+      {
+        imgName: "2021-6",
+        description: "A favorite memory from 2021. Description to be updated.",
+        imageDate: "2021",
+        imgSrc: "/Our story/2021/6_result.png"
       }
     ],
     "2022": [
       {
-        imgName: "new-year",
-        description: "Starting 2022 together, excited for what the year would bring.",
-        imageDate: "January 2022",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2022-1",
+        description: "A favorite memory from 2022. Description to be updated.",
+        imageDate: "2022",
+        imgSrc: "/Our story/2022/1_result.png"
       },
       {
-        imgName: "valentine",
-        description: "Our first Valentine's Day together, filled with love and laughter.",
-        imageDate: "February 2022",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2022-2",
+        description: "A favorite memory from 2022. Description to be updated.",
+        imageDate: "2022",
+        imgSrc: "/Our story/2022/2_result.png"
       },
       {
-        imgName: "spring-bloom",
-        description: "Watching the flowers bloom just like our relationship was blossoming.",
-        imageDate: "May 2022",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2022-3",
+        description: "A favorite memory from 2022. Description to be updated.",
+        imageDate: "2022",
+        imgSrc: "/Our story/2022/3_result.png"
       },
       {
-        imgName: "summer-getaway",
-        description: "Our first vacation together, creating memories we'll cherish forever.",
-        imageDate: "August 2022",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2022-4",
+        description: "A favorite memory from 2022. Description to be updated.",
+        imageDate: "2022",
+        imgSrc: "/Our story/2022/4_result.png"
+      },
+      {
+        imgName: "2022-5",
+        description: "A favorite memory from 2022. Description to be updated.",
+        imageDate: "2022",
+        imgSrc: "/Our story/2022/5_result.jpg"
+      },
+      {
+        imgName: "2022-6",
+        description: "A favorite memory from 2022. Description to be updated.",
+        imageDate: "2022",
+        imgSrc: "/Our story/2022/6_result.png"
+      },
+      {
+        imgName: "2022-7",
+        description: "A favorite memory from 2022. Description to be updated.",
+        imageDate: "2022",
+        imgSrc: "/Our story/2022/7_result.png"
+      },
+      {
+        imgName: "2022-8",
+        description: "A favorite memory from 2022. Description to be updated.",
+        imageDate: "2022",
+        imgSrc: "/Our story/2022/8_result.png"
       }
     ],
     "2023": [
       {
-        imgName: "new-home",
-        description: "Moving in together and making our house a home.",
-        imageDate: "February 2023",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2023-1",
+        description: "A favorite memory from 2023. Description to be updated.",
+        imageDate: "2023",
+        imgSrc: "/Our story/2023/1_result.jpg"
       },
       {
-        imgName: "anniversary",
-        description: "Celebrating our second anniversary with a romantic dinner.",
-        imageDate: "March 2023",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2023-2",
+        description: "A favorite memory from 2023. Description to be updated.",
+        imageDate: "2023",
+        imgSrc: "/Our story/2023/2_result.jpg"
       },
       {
-        imgName: "family-time",
-        description: "Spending time with family and realizing we were meant to be together.",
-        imageDate: "June 2023",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2023-3",
+        description: "A favorite memory from 2023. Description to be updated.",
+        imageDate: "2023",
+        imgSrc: "/Our story/2023/3_result.jpg"
       },
       {
-        imgName: "autumn-love",
-        description: "Fall colors matching the warmth we felt in our hearts.",
-        imageDate: "October 2023",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2023-4",
+        description: "A favorite memory from 2023. Description to be updated.",
+        imageDate: "2023",
+        imgSrc: "/Our story/2023/4_result.png"
       },
       {
-        imgName: "holidays",
-        description: "Our first holiday season living together, starting our own traditions.",
-        imageDate: "December 2023",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2023-5",
+        description: "A favorite memory from 2023. Description to be updated.",
+        imageDate: "2023",
+        imgSrc: "/Our story/2023/5_result.png"
+      },
+      {
+        imgName: "2023-6",
+        description: "A favorite memory from 2023. Description to be updated.",
+        imageDate: "2023",
+        imgSrc: "/Our story/2023/6_result.jpg"
+      },
+      {
+        imgName: "2023-7",
+        description: "A favorite memory from 2023. Description to be updated.",
+        imageDate: "2023",
+        imgSrc: "/Our story/2023/7_result.jpg"
+      },
+      {
+        imgName: "2023-8",
+        description: "A favorite memory from 2023. Description to be updated.",
+        imageDate: "2023",
+        imgSrc: "/Our story/2023/8_result.png"
       }
     ],
     "2024": [
       {
-        imgName: "winter-cozy",
-        description: "Cozy winter nights that brought us even closer together.",
-        imageDate: "January 2024",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2024-1",
+        description: "A favorite memory from 2024. Description to be updated.",
+        imageDate: "2024",
+        imgSrc: "/Our story/2024/1_result.jpg"
       },
       {
-        imgName: "spring-proposal",
-        description: "The moment that changed everything - when Brian got down on one knee!",
-        imageDate: "April 2024",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2024-2",
+        description: "A favorite memory from 2024. Description to be updated.",
+        imageDate: "2024",
+        imgSrc: "/Our story/2024/2_result.png"
       },
       {
-        imgName: "engagement-party",
-        description: "Celebrating our engagement with friends and family who mean the world to us.",
-        imageDate: "May 2024",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2024-3",
+        description: "A favorite memory from 2024. Description to be updated.",
+        imageDate: "2024",
+        imgSrc: "/Our story/2024/3_result.png"
       },
       {
-        imgName: "wedding-planning",
-        description: "Starting to plan our dream wedding and getting excited for our future.",
-        imageDate: "July 2024",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2024-4",
+        description: "A favorite memory from 2024. Description to be updated.",
+        imageDate: "2024",
+        imgSrc: "/Our story/2024/4_result.png"
       },
       {
-        imgName: "venue-visit",
-        description: "Finding the perfect venue for our special day at Cedar Hill.",
-        imageDate: "September 2024",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2024-5",
+        description: "A favorite memory from 2024. Description to be updated.",
+        imageDate: "2024",
+        imgSrc: "/Our story/2024/5_result.png"
       },
       {
-        imgName: "thanksgiving",
-        description: "Grateful for another year together and excited for what's to come.",
-        imageDate: "November 2024",
-        imgSrc: "/Lexi&B.jpg"
-      }
-    ],
-    "2025": [
+        imgName: "2024-6",
+        description: "A favorite memory from 2024. Description to be updated.",
+        imageDate: "2024",
+        imgSrc: "/Our story/2024/6_result.png"
+      },
       {
-        imgName: "new-year-engaged",
-        description: "Starting 2025 as an engaged couple, counting down to our wedding day!",
-        imageDate: "January 2025",
-        imgSrc: "/Lexi&B.jpg"
+        imgName: "2024-7",
+        description: "A favorite memory from 2024. Description to be updated.",
+        imageDate: "2024",
+        imgSrc: "/Our story/2024/7_result.png"
+      },
+      {
+        imgName: "2024-8",
+        description: "A favorite memory from 2024. Description to be updated.",
+        imageDate: "2024",
+        imgSrc: "/Our story/2024/8_result.jpg"
       }
     ]
   };
@@ -159,7 +223,7 @@ export default function OurStory() {
             these moments capture the journey that brought us together and the memories we&apos;ve created along the way.
           </p>
           <p className="text-sm text-periwinkle-300/70 mt-4 italic">
-            Hover over any photo to read the story behind the moment
+            Tap or hover any photo to read the story behind the moment
           </p>
         </div>
       </div>

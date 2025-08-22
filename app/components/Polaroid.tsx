@@ -47,7 +47,7 @@ export default function Polaroid({ imgName, description, imageDate, imgSrc }: Po
             onMouseEnter={() => setShowDescription(true)}
             onMouseLeave={() => setShowDescription(false)}
         >
-            <div className="relative bg-white p-4 pb-16 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2">
+            <div className="relative bg-white p-4 pb-20 sm:pb-16 shadow-lg hover:shadow-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2">
                 {/* Image area */}
                 <div className="relative aspect-square bg-gray-100 overflow-hidden">
                     <Image
@@ -80,10 +80,13 @@ export default function Polaroid({ imgName, description, imageDate, imgSrc }: Po
                     <p className="text-gray-700 text-sm font-mono tracking-wider">
                         {imageDate}
                     </p>
+                    {/* Mobile caption below image */}
+                    <p className="sm:hidden text-gray-600 text-xs mt-1 leading-snug">
+                        {description}
+                    </p>
                 </div>
 
                 {/* Tape effect for some Polaroids */}
-                <div>{showTape ? "true" : "false"}</div>
                 {showTape && (
                     <div
                         className="absolute -top-2 w-16 h-6 bg-yellow-200/80 border border-yellow-300/50 rotate-1 shadow-sm"

@@ -16,39 +16,38 @@ interface TimelineSectionProps {
 }
 
 export default function TimelineSection({ year, photos }: TimelineSectionProps) {
-    const [isVisible, setIsVisible] = useState(false);
+    const [hasEntered, setHasEntered] = useState(false);
     const sectionRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
+        const element = sectionRef.current;
+        if (!element) return;
+
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
-                    setIsVisible(true);
-                } else {
-                    setIsVisible(false);
+                    setHasEntered(true);
+                    observer.unobserve(entry.target);
                 }
             },
             {
-                threshold: 0.2,
-                rootMargin: "50px 0px",
+                // Trigger a bit before the section fully enters and avoid edge flicker
+                threshold: 0.1,
+                rootMargin: "0px 0px -10% 0px",
             }
         );
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
+        observer.observe(element);
 
         return () => {
-            if (sectionRef.current) {
-                observer.unobserve(sectionRef.current);
-            }
+            observer.disconnect();
         };
     }, []);
 
     return (
         <div
             ref={sectionRef}
-            className={`py-16 transition-all duration-1000 ${isVisible
+            className={`py-16 transition-all duration-1000 ${hasEntered
                 ? 'opacity-100 translate-y-0'
                 : 'opacity-0 translate-y-8'
                 }`}
@@ -66,7 +65,7 @@ export default function TimelineSection({ year, photos }: TimelineSectionProps) 
                 {photos.map((photo, index) => (
                     <div
                         key={`${year}-${index}`}
-                        className={`transition-all duration-700 ${isVisible
+                        className={`transition-all duration-700 ${hasEntered
                             ? 'opacity-100 translate-y-0'
                             : 'opacity-0 translate-y-4'
                             }`}
