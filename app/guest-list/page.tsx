@@ -9,11 +9,13 @@ export interface GuestListEntry {
     created_at: string;
     first_name: string;
     last_name: string;
+    attending: boolean;
     interested_in_shuttle: boolean;
     interested_in_hotel_block: boolean;
     has_plus_one: boolean;
-    plus_one_first_name: string | null;
-    plus_one_last_name: string | null;
+    is_plus_one: boolean;
+    plus_one_host: string | null;
+    message: string | null;
 }
 
 export default function SearchableGuestList() {
@@ -26,7 +28,7 @@ export default function SearchableGuestList() {
     useEffect(() => {
         async function fetchGuests() {
             const supabase = await createClient();
-            const { data, error } = await supabase.from("Guest List").select("*");
+            const { data, error } = await supabase.from("Guest List").select("*").eq("attending", true);
             if (error) {
                 setError(error);
             } else {
@@ -107,19 +109,21 @@ export default function SearchableGuestList() {
                                                 <p className="font-medium text-white">
                                                     {guest.first_name} {guest.last_name}
                                                 </p>
-                                                {guest.has_plus_one &&
-                                                    (guest.plus_one_first_name ||
-                                                        guest.plus_one_last_name) && (
-                                                        <p className="text-xs text-periwinkle-300/60 mt-1">
-                                                            Plus One: {guest.plus_one_first_name || ""}{" "}
-                                                            {guest.plus_one_last_name || ""}
-                                                        </p>
-                                                    )}
+                                                {guest.is_plus_one && guest.plus_one_host && (
+                                                    <p className="text-xs text-periwinkle-300/60 mt-1">
+                                                        Plus one for {guest.plus_one_host}
+                                                    </p>
+                                                )}
                                             </div>
                                             <div className="flex space-x-2">
                                                 {guest.interested_in_hotel_block && (
                                                     <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-periwinkle-900/80 text-periwinkle-300">
                                                         Hotel
+                                                    </span>
+                                                )}
+                                                {guest.interested_in_shuttle && (
+                                                    <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs bg-amber-900/60 text-amber-200">
+                                                        Shuttle
                                                     </span>
                                                 )}
                                             </div>
