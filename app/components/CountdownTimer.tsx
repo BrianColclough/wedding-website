@@ -14,8 +14,7 @@ interface CountdownTimerProps {
 }
 
 // Pure function - can be calculated during render
-function calculateTimeLeft(weddingDate: Date): TimeLeft {
-  const now = Date.now();
+function calculateTimeLeft(weddingDate: Date, now: number): TimeLeft {
   const difference = weddingDate.getTime() - now;
 
   if (difference <= 0) {
@@ -32,10 +31,10 @@ function calculateTimeLeft(weddingDate: Date): TimeLeft {
 }
 
 export default function CountdownTimer({ weddingDate }: CountdownTimerProps) {
-  const [currentTime, setCurrentTime] = useState(Date.now);
+  const [currentTime, setCurrentTime] = useState(() => Date.now());
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const timeLeft = useMemo(() => calculateTimeLeft(weddingDate), [weddingDate, currentTime]);
+  const timeLeft = useMemo(() => calculateTimeLeft(weddingDate, currentTime), [weddingDate, currentTime]);
 
   const isFinished = timeLeft.days === 0 && timeLeft.hours === 0 &&
     timeLeft.minutes === 0 && timeLeft.seconds === 0;

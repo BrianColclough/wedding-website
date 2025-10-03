@@ -1,3 +1,5 @@
+import MapWithMarkers from "@/app/components/MapWithMarkers";
+
 export default function Info() {
   return (
     <div className="container mx-auto bg-black text-white px-4 py-8">
@@ -20,6 +22,15 @@ export default function Info() {
             <div className="mt-4 p-3 bg-periwinkle-900/20 rounded-lg border border-periwinkle-700/40">
               <p className="font-medium text-periwinkle-200">Venue Address:</p>
               <p className="text-white">450 Clark Road, Salisbury, NC 28146</p>
+            </div>
+            <div className="mt-4 space-y-3">
+              <div className="p-3 bg-periwinkle-900/20 rounded-lg border border-periwinkle-700/40">
+                <p className="font-medium text-periwinkle-200">Hotel Address:</p>
+                <p className="text-white">1001 Klumac Rd, Salisbury, NC 28144, US</p>
+              </div>
+              <div className="pt-2">
+                <MapWithMarkers />
+              </div>
             </div>
           </div>
         </div>

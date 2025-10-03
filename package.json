@@ -13,15 +13,19 @@
   "dependencies": {
     "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.57.2",
+    "leaflet": "^1.9.4",
+    "leaflet-defaulticon-compatibility": "^0.1.2",
     "next": "15.3.1",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "react-leaflet": "^5.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4.1.13",
     "@types/estree": "^1.0.8",
     "@types/json-schema": "^7.0.15",
+    "@types/leaflet": "^1.9.20",
     "@types/node": "^20.19.13",
     "@types/phoenix": "^1.6.6",
     "@types/react": "^19.1.12",
