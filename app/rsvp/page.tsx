@@ -7,7 +7,7 @@ import { ChangeEvent, useState } from "react";
 type RSVPForm = {
   first_name: string;
   last_name: string;
-  attending: boolean;
+  attending: boolean | null;
   plusOne: boolean;
   message: string;
   interested_in_shuttle: boolean;
@@ -20,7 +20,7 @@ export default function RSVP() {
   const [formData, setFormData] = useState<RSVPForm>({
     first_name: "",
     last_name: "",
-    attending: false,
+    attending: null,
     plusOne: false,
     message: "",
     interested_in_shuttle: false,
@@ -44,11 +44,10 @@ export default function RSVP() {
   };
 
   const toggleRadio = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target);
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: name === 'attending' ? value === 'true' : value,
+      [name]: name === "attending" ? value === "true" : value,
     }));
   };
 
@@ -86,21 +85,24 @@ export default function RSVP() {
 
     try {
       const supabase = await createClient();
+      const hostFullName = `${formData.first_name.trim()} ${formData.last_name.trim()}`.trim();
+      const rsvpMessage = formData.message.trim();
 
-      if (formData.attending) {
-        const { error: mainGuestError } = await supabase
-          .from("Guest List")
-          .insert({
-            first_name: formData.first_name,
-            last_name: formData.last_name,
-            attending: formData.attending,
-            interested_in_shuttle: formData.interested_in_shuttle,
-            interested_in_hotel_block: formData.interested_in_hotel_block,
-            has_plus_one: formData.plusOne,
-          });
+      const { error: mainGuestError } = await supabase
+        .from("Guest List")
+        .insert({
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          attending: formData.attending,
+          interested_in_shuttle: formData.interested_in_shuttle,
+          interested_in_hotel_block: formData.interested_in_hotel_block,
+          has_plus_one: formData.attending ? formData.plusOne : false,
+          is_plus_one: false,
+          plus_one_host: null,
+          message: rsvpMessage ? rsvpMessage : null,
+        });
 
-        if (mainGuestError) throw new Error(mainGuestError.message);
-      }
+      if (mainGuestError) throw new Error(mainGuestError.message);
 
       // Insert plus one if applicable
       if (formData.attending && formData.plusOne) {
@@ -113,6 +115,9 @@ export default function RSVP() {
             interested_in_shuttle: formData.interested_in_shuttle,
             interested_in_hotel_block: formData.interested_in_hotel_block,
             has_plus_one: false,
+            is_plus_one: true,
+            plus_one_host: hostFullName || formData.first_name.trim() || null,
+            message: null,
           });
 
         if (plusOneError) throw new Error(plusOneError.message);
