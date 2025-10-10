@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function WeddingParty() {
   // Placeholder data - replace with actual wedding party details
   const bridesmaids = [
@@ -5,19 +7,31 @@ export default function WeddingParty() {
       name: "Olivia Rogers",
       role: "Maid of Honor",
       relation: "Sister of the Bride",
-      image: "/placeholder-woman.jpg",
+      image: "/wedding-party/Livy.jpg",
     },
     {
       name: "Brielle Smith",
       role: "Bridesmaid",
       relation: "Sister of the Bride",
-      image: "/placeholder-woman.jpg",
+      image: "/wedding-party/Brielle.jpg",
     },
     {
       name: "Meredith Wilson",
       role: "Bridesmaid",
       relation: "Sister of the Bride",
-      image: "/placeholder-woman.jpg",
+      image: "",
+    },
+    {
+      name: "Lindsay McCoy",
+      role: "Bridesmaid",
+      relation: "Friend of the Bride",
+      image: "/wedding-party/Lindsay.jpg",
+    },
+    {
+      name: "Payton Kyzer",
+      role: "Bridesmaid",
+      relation: "Friend of the Bride",
+      image: "",
     },
   ];
 
@@ -26,19 +40,13 @@ export default function WeddingParty() {
       name: "Chris Colclough",
       role: "Best Man",
       relation: "Brother of the Groom",
-      image: "/placeholder-man.jpg",
+      image: "/wedding-party/Chris.jpg",
     },
     {
       name: "Patrick Winner",
       role: "Groomsman",
       relation: "Brother of the Bride",
-      image: "/placeholder-man.jpg",
-    },
-    {
-      name: "David Wilson",
-      role: "Groomsman",
-      relation: "Childhood Friend",
-      image: "/placeholder-man.jpg",
+      image: null
     },
   ];
 
@@ -61,10 +69,15 @@ export default function WeddingParty() {
                 className="relative group"
               >
                 <h3 className="font-serif font-semibold text-2xl relative inline-block translate-y-4 translate-x-3 px-1 bg-black z-10">{person.name}</h3>
-                <div className="h-56 border-2 border-dashed border-periwinkle-300 rounded-lg flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-pink-200 flex items-center justify-center">
-                    {person.name.charAt(0)}
-                  </div>
+                <div className="h-56 rounded-lg overflow-hidden relative">
+                  {person.image && (
+                    <Image
+                      src={person.image}
+                      alt={person.name}
+                      fill
+                      className="object-contain"
+                    />
+                  )}
                 </div>
                 <div className="px-6 py-2 text-right relative">
                   <p className="text-periwinkle-500 font-medium text-lg mt-2">{person.role}</p>
@@ -84,10 +97,15 @@ export default function WeddingParty() {
                 className="relative group"
               >
                 <h3 className="font-serif font-semibold text-2xl relative inline-block translate-y-4 translate-x-3 px-1 bg-black z-10">{person.name}</h3>
-                <div className="h-48 border-2 border-blue-200 border-dashed rounded-lg flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-blue-200 flex items-center justify-center text-blue-500">
-                    {person.name.charAt(0)}
-                  </div>
+                <div className="h-56 rounded-lg overflow-hidden relative">
+                  {person.image && (
+                    <Image
+                      src={person.image}
+                      alt={person.name}
+                      fill
+                      className="object-contain"
+                    />
+                  )}
                 </div>
                 <div className="px-6 py-2 text-right relative">
                   <p className="text-blue-500 font-medium text-lg mt-2">{person.role}</p>
