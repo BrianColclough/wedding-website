@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import LoadingSpinner from "./LoadingSpinner";
 
 type Weather = {
   temp: number;
@@ -11,6 +12,7 @@ type Weather = {
 export default function WeatherWidget() {
   const [data, setData] = useState<Weather | null>(null);
   const [err, setErr] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const url =
@@ -24,12 +26,17 @@ export default function WeatherWidget() {
           code: j.current?.weather_code,
         });
       })
-      .catch(() => setErr("Weather unavailable"));
+      .catch(() => setErr("Weather unavailable"))
+      .finally(() => setIsLoading(false));
   }, []);
 
   if (err) return <div className="text-amber-200">{err}</div>;
-  if (!data)
-    return <div className="text-periwinkle-300">Loading weather…</div>;
+  if (isLoading || !data)
+    return (
+      <div className="p-1 bg-periwinkle-900/20 rounded-lg border border-periwinkle-700/40">
+        <LoadingSpinner message="Loading weather…" />
+      </div>
+    );
 
   const codeToText = (c: number) => {
     const map: Record<number, string> = {
