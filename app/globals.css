@@ -57,3 +57,17 @@ select:focus-visible,
 a:focus-visible {
   @apply outline-2 outline-amber-400 outline-dotted transition-all duration-200;
 }
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.45;
+  }
+  100% {
+    transform: translateY(-120vh) scale(1.2);
+    opacity: 0;
+  }
+}
