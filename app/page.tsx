@@ -1,5 +1,6 @@
 import Image from "next/image";
 import CountdownTimer from "./components/CountdownTimer";
+import FloatingHearts from "./components/FloatingHearts";
 
 export default function Home() {
   const weddingDate = new Date("2026-05-15T16:00:00");
@@ -20,6 +21,7 @@ export default function Home() {
               fetchPriority="high"
             />
             <div className="absolute inset-0 bg-black/30"></div>
+            <FloatingHearts />
           </div>
 
           <div className="relative z-10 h-full flex flex-col items-center justify-center px-4 text-white">

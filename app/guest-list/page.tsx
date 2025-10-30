@@ -55,6 +55,11 @@ export default function SearchableGuestList() {
                         <div className="w-16 h-0.5 mx-auto bg-periwinkle-400 rounded-full"></div>
                         <h2 className="m-2 text-lg font-bold text-gray-200">We&apos;re so excited to celebrate with all of you!</h2>
                         <span className="font-extralight text-gray-300">Below is a list of all the friends and family who will be joining us on our special day. Search for your name if you&apos;d like to confirm your RSVP status. </span>
+                        {!loading && (
+                            <p className="text-sm text-periwinkle-300/80 mt-4 mb-4 text-center">
+                                {guests.length} attending so far — we can&apos;t wait to celebrate!
+                            </p>
+                        )}
                     </div>
 
                     {/* Search Input */}

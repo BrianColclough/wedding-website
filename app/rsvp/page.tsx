@@ -3,6 +3,7 @@
 import { createClient } from "@/utils/supabase/client";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
+import confetti from "canvas-confetti";
 
 type RSVPForm = {
   first_name: string;
@@ -124,6 +125,28 @@ export default function RSVP() {
       }
 
       setIsSubmitted(true);
+      confetti({
+        particleCount: 160,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#a3a3ff", "#ffcd19", "#ffffff"],
+      });
+      setTimeout(() => {
+        confetti({
+          particleCount: 80,
+          angle: 120,
+          spread: 55,
+          origin: { x: 0.15, y: 0.7 },
+        });
+      }, 300);
+      setTimeout(() => {
+        confetti({
+          particleCount: 80,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0.85, y: 0.7 },
+        });
+      }, 300);
     } catch (err) {
       console.error("Error submitting RSVP:", err);
       setError(err instanceof Error ? err.message : "Failed to submit RSVP");
