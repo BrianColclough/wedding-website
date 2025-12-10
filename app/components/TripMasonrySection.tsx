@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 interface TripMasonrySectionProps {
@@ -9,19 +9,146 @@ interface TripMasonrySectionProps {
     photos: string[];
 }
 
+interface LightboxProps {
+    isOpen: boolean;
+    onClose: () => void;
+    currentIndex: number;
+    onIndexChange: (index: number) => void;
+    photos: string[];
+    title: string;
+}
+
+function Lightbox({ isOpen, onClose, currentIndex, onIndexChange, photos, title }: LightboxProps) {
+    // Lock body scroll when open
+    useEffect(() => {
+        if (!isOpen) return;
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, [isOpen]);
+
+    // Keyboard navigation
+    useEffect(() => {
+        if (!isOpen) return;
+
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') {
+                onClose();
+            } else if (e.key === 'ArrowLeft') {
+                onIndexChange(Math.max(0, currentIndex - 1));
+            } else if (e.key === 'ArrowRight') {
+                onIndexChange(Math.min(photos.length - 1, currentIndex + 1));
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [isOpen, currentIndex, photos.length, onClose, onIndexChange]);
+
+    if (!isOpen) return null;
+
+    return createPortal(
+        <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
+            onClick={onClose}
+            role="dialog"
+            aria-modal="true"
+            aria-label={`${title} photo gallery`}
+        >
+            {/* Close Button */}
+            <button
+                onClick={onClose}
+                className="absolute top-4 right-4 z-50 text-white hover:text-gray-300 transition-colors p-2"
+                aria-label="Close lightbox"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-8 w-8"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+
+            {/* Previous Button */}
+            {currentIndex > 0 && (
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onIndexChange(currentIndex - 1);
+                    }}
+                    className="absolute left-4 z-50 text-white hover:text-gray-300 transition-colors p-2 bg-black bg-opacity-50 rounded-full"
+                    aria-label="Previous image"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-8 w-8"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    </svg>
+                </button>
+            )}
+
+            {/* Next Button */}
+            {currentIndex < photos.length - 1 && (
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onIndexChange(currentIndex + 1);
+                    }}
+                    className="absolute right-4 z-50 text-white hover:text-gray-300 transition-colors p-2 bg-black bg-opacity-50 rounded-full"
+                    aria-label="Next image"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-8 w-8"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                </button>
+            )}
+
+            {/* Image Container */}
+            <div
+                className="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center"
+                onClick={(e) => e.stopPropagation()}
+            >
+                <Image
+                    src={photos[currentIndex]}
+                    alt={`${title} photo ${currentIndex + 1}`}
+                    width={1920}
+                    height={1080}
+                    className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
+                    priority
+                />
+            </div>
+
+            {/* Image Counter */}
+            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-4 py-2 rounded-full">
+                {currentIndex + 1} / {photos.length}
+            </div>
+        </div>,
+        document.body
+    );
+}
+
 export default function TripMasonrySection({ title, photos }: TripMasonrySectionProps) {
     const [hasEntered, setHasEntered] = useState(false);
     const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set());
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [isMounted, setIsMounted] = useState(false);
     const sectionRef = useRef<HTMLDivElement>(null);
 
-    // Track mount state for portal
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
-
+    // Animation observer
     useEffect(() => {
         const element = sectionRef.current;
         if (!element) return;
@@ -46,155 +173,26 @@ export default function TripMasonrySection({ title, photos }: TripMasonrySection
         };
     }, []);
 
-    const handleImageLoad = (index: number) => {
-        setLoadedImages(prev => new Set(prev).add(index));
-    };
+    const handleImageLoad = useCallback((index: number) => {
+        setLoadedImages(prev => {
+            const newSet = new Set(prev);
+            newSet.add(index);
+            return newSet;
+        });
+    }, []);
 
-    const openLightbox = (index: number) => {
+    const openLightbox = useCallback((index: number) => {
         setCurrentImageIndex(index);
         setIsLightboxOpen(true);
-    };
+    }, []);
 
-    const closeLightbox = () => {
+    const closeLightbox = useCallback(() => {
         setIsLightboxOpen(false);
-    };
+    }, []);
 
-    const goToPrevious = () => {
-        setCurrentImageIndex(prev => Math.max(0, prev - 1));
-    };
-
-    const goToNext = () => {
-        setCurrentImageIndex(prev => Math.min(photos.length - 1, prev + 1));
-    };
-
-    // Keyboard navigation and body scroll prevention
-    useEffect(() => {
-        if (!isLightboxOpen) return;
-
-        // Prevent body scroll
-        document.body.style.overflow = 'hidden';
-
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') {
-                closeLightbox();
-            } else if (e.key === 'ArrowLeft') {
-                goToPrevious();
-            } else if (e.key === 'ArrowRight') {
-                goToNext();
-            }
-        };
-
-        window.addEventListener('keydown', handleKeyDown);
-
-        return () => {
-            document.body.style.overflow = 'unset';
-            window.removeEventListener('keydown', handleKeyDown);
-        };
-    }, [isLightboxOpen, currentImageIndex, photos.length]);
-
-    // Lightbox JSX to be rendered via portal
-    const lightboxContent = isLightboxOpen && (
-        <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
-            onClick={closeLightbox}
-        >
-            {/* Close Button */}
-            <button
-                onClick={closeLightbox}
-                className="absolute top-4 right-4 z-50 text-white hover:text-gray-300 transition-colors p-2"
-                aria-label="Close lightbox"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M6 18L18 6M6 6l12 12"
-                    />
-                </svg>
-            </button>
-
-            {/* Previous Button */}
-            {currentImageIndex > 0 && (
-                <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        goToPrevious();
-                    }}
-                    className="absolute left-4 z-50 text-white hover:text-gray-300 transition-colors p-2 bg-black bg-opacity-50 rounded-full"
-                    aria-label="Previous image"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-8 w-8"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M15 19l-7-7 7-7"
-                        />
-                    </svg>
-                </button>
-            )}
-
-            {/* Next Button */}
-            {currentImageIndex < photos.length - 1 && (
-                <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        goToNext();
-                    }}
-                    className="absolute right-4 z-50 text-white hover:text-gray-300 transition-colors p-2 bg-black bg-opacity-50 rounded-full"
-                    aria-label="Next image"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-8 w-8"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 5l7 7-7 7"
-                        />
-                    </svg>
-                </button>
-            )}
-
-            {/* Image Container */}
-            <div
-                className="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center"
-                onClick={(e) => e.stopPropagation()}
-            >
-                <Image
-                    src={photos[currentImageIndex]}
-                    alt={`${title} photo ${currentImageIndex + 1}`}
-                    width={1920}
-                    height={1080}
-                    className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
-                    priority
-                />
-            </div>
-
-            {/* Image Counter */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-4 py-2 rounded-full">
-                {currentImageIndex + 1} / {photos.length}
-            </div>
-        </div>
-    );
+    const handleIndexChange = useCallback((index: number) => {
+        setCurrentImageIndex(index);
+    }, []);
 
     return (
         <>
@@ -253,10 +251,14 @@ export default function TripMasonrySection({ title, photos }: TripMasonrySection
                 </div>
             </div>
 
-            {/* Render lightbox via portal to document body */}
-            {isMounted && lightboxContent && createPortal(lightboxContent, document.body)}
+            <Lightbox
+                isOpen={isLightboxOpen}
+                onClose={closeLightbox}
+                currentIndex={currentImageIndex}
+                onIndexChange={handleIndexChange}
+                photos={photos}
+                title={title}
+            />
         </>
     );
 }
-
-
