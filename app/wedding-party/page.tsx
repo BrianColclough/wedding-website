@@ -51,37 +51,55 @@ export default function WeddingParty() {
   ];
 
   return (
-    <div className="container mx-auto bg-black text-white px-4 py-8">
-      <h1 className="text-3xl md:text-4xl font-bold text-center mb-8">
+    <div className="container mx-auto px-4 py-16 text-white">
+      <h1 className="mb-12 text-center text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
         Wedding Party
       </h1>
 
-      <div className="max-w-5xl mx-auto">
-        <div className="mb-10">
-          <h2 className="text-2xl text-periwinkle-300 font-semibold text-center mb-6">
-            Bridesmaids
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {bridesmaids.map((person, index) => (
+      <div className="mx-auto max-w-6xl">
+        <div className="mb-20">
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <div className="h-px w-12 bg-periwinkle-300/50"></div>
+            <h2 className="text-3xl font-semibold text-periwinkle-300">
+              Bridesmaids
+            </h2>
+            <div className="h-px w-12 bg-periwinkle-300/50"></div>
+          </div>
 
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {bridesmaids.map((person, index) => (
               <div
                 key={index}
-                className="relative group"
+                className="group relative flex flex-col items-center"
               >
-                <h3 className="font-serif font-semibold text-2xl relative inline-block translate-y-4 translate-x-3 px-1 bg-black z-10">{person.name}</h3>
-                <div className="h-56 rounded-lg overflow-hidden relative">
-                  {person.image && (
+                <div className="relative mb-6 aspect-[3/4] w-full overflow-hidden rounded-xl bg-neutral-900 shadow-2xl">
+                  {person.image ? (
                     <Image
                       src={person.image}
                       alt={person.name}
                       fill
-                      className="object-contain"
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-neutral-800 text-neutral-600">
+                      <span className="text-6xl font-thin opacity-20">
+                        {person.name.charAt(0)}
+                      </span>
+                    </div>
                   )}
                 </div>
-                <div className="px-6 py-2 text-right relative">
-                  <p className="text-periwinkle-500 font-medium text-lg mt-2">{person.role}</p>
-                  <p className="text-gray-600 text-sm">{person.relation}</p>
+
+                <div className="text-center">
+                  <h3 className="mb-1 font-serif text-2xl font-medium tracking-wide text-white">
+                    {person.name}
+                  </h3>
+                  <p className="mb-1 text-sm font-bold uppercase tracking-wider text-periwinkle-400">
+                    {person.role}
+                  </p>
+                  <p className="text-sm italic text-neutral-400">
+                    {person.relation}
+                  </p>
                 </div>
               </div>
             ))}
@@ -89,27 +107,48 @@ export default function WeddingParty() {
         </div>
 
         <div>
-          <h2 className="text-2xl font-semibold text-center mb-6">Groomsmen</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <div className="h-px w-12 bg-periwinkle-300/50"></div>
+            <h2 className="text-3xl font-semibold text-periwinkle-300">
+              Groomsmen
+            </h2>
+            <div className="h-px w-12 bg-periwinkle-300/50"></div>
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
             {groomsmen.map((person, index) => (
               <div
                 key={index}
-                className="relative group"
+                className="group relative flex flex-col items-center"
               >
-                <h3 className="font-serif font-semibold text-2xl relative inline-block translate-y-4 translate-x-3 px-1 bg-black z-10">{person.name}</h3>
-                <div className="h-56 rounded-lg overflow-hidden relative">
-                  {person.image && (
+                <div className="relative mb-6 aspect-[3/4] w-full overflow-hidden rounded-xl bg-neutral-900 shadow-2xl">
+                  {person.image ? (
                     <Image
                       src={person.image}
                       alt={person.name}
                       fill
-                      className="object-contain"
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-neutral-800 text-neutral-600">
+                      <span className="text-6xl font-thin opacity-20">
+                        {person.name.charAt(0)}
+                      </span>
+                    </div>
                   )}
                 </div>
-                <div className="px-6 py-2 text-right relative">
-                  <p className="text-blue-500 font-medium text-lg mt-2">{person.role}</p>
-                  <p className="text-gray-600 text-sm">{person.relation}</p>
+
+                <div className="text-center">
+                  <h3 className="mb-1 font-serif text-2xl font-medium tracking-wide text-white">
+                    {person.name}
+                  </h3>
+                  <p className="mb-1 text-sm font-bold uppercase tracking-wider text-blue-400">
+                    {person.role}
+                  </p>
+                  <p className="text-sm italic text-neutral-400">
+                    {person.relation}
+                  </p>
                 </div>
               </div>
             ))}

@@ -110,45 +110,43 @@ export default function MapWithMarkers() {
     }, [L]);
 
     return (
-        <div className="w-full overflow-hidden rounded-xl border border-periwinkle-700/30 bg-black/30">
-            <div className="w-full" style={{ height: 400 }}>
-                {clientReady && RL && (
-                    <RL.MapContainer
-                        style={{ height: "100%", width: "100%" }}
-                        scrollWheelZoom={false}
-                        {...(bounds
-                            ? { bounds, boundsOptions: { padding: [48, 48] } }
-                            : { center, zoom: 12 })}
-                    >
-                        <RL.TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
+        <div className="w-full h-full">
+            {clientReady && RL && (
+                <RL.MapContainer
+                    style={{ height: "100%", width: "100%" }}
+                    scrollWheelZoom={false}
+                    {...(bounds
+                        ? { bounds, boundsOptions: { padding: [48, 48] } }
+                        : { center, zoom: 12 })}
+                >
+                    <RL.TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
 
-                        {LOCATIONS.map((loc) => {
-                            const [lat, lon] = loc.position as [number, number];
-                            return (
-                                <RL.Marker key={loc.name} position={loc.position} icon={markerIcon}>
-                                    <RL.Popup>
-                                        <div className="space-y-1">
-                                            <p className="font-semibold">{loc.name}</p>
-                                            <p className="text-sm">{loc.address}</p>
-                                            <a
-                                                className="text-periwinkle-300 underline"
-                                                href={buildMapLinkForCoords(lat, lon)}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                Open in Maps ↗
-                                            </a>
-                                        </div>
-                                    </RL.Popup>
-                                </RL.Marker>
-                            );
-                        })}
-                    </RL.MapContainer>
-                )}
-            </div>
+                    {LOCATIONS.map((loc) => {
+                        const [lat, lon] = loc.position as [number, number];
+                        return (
+                            <RL.Marker key={loc.name} position={loc.position} icon={markerIcon}>
+                                <RL.Popup>
+                                    <div className="space-y-1 text-black">
+                                        <p className="font-semibold">{loc.name}</p>
+                                        <p className="text-sm">{loc.address}</p>
+                                        <a
+                                            className="text-periwinkle-600 underline"
+                                            href={buildMapLinkForCoords(lat, lon)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            Open in Maps ↗
+                                        </a>
+                                    </div>
+                                </RL.Popup>
+                            </RL.Marker>
+                        );
+                    })}
+                </RL.MapContainer>
+            )}
 
             {error && (
                 <div className="px-4 py-3 text-sm text-amber-200">
