@@ -28,7 +28,7 @@ export default function Info() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-min">
 
           {/* 1. KEY DETAILS (Large Card) */}
-          <div className="lg:col-span-2 row-span-1 group relative overflow-hidden rounded-3xl bg-white/5 border border-white/10 p-8 backdrop-blur-md transition-all hover:border-periwinkle-500/30 hover:shadow-2xl hover:shadow-periwinkle-900/20">
+          <div className="lg:col-span-2 row-span-1 group relative overflow-hidden rounded-3xl bg-white/5 border border-white/10 p-8 backdrop-blur-md transition-all hover:bg-white/10 hover:border-periwinkle-500/30 hover:shadow-2xl hover:shadow-periwinkle-900/20">
             <div className="absolute top-0 right-0 w-64 h-64 bg-periwinkle-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-periwinkle-500/20 transition-all duration-700"></div>
 
             <div className="relative z-10 flex flex-col h-full justify-between">
