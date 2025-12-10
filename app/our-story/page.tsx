@@ -240,66 +240,74 @@ export default function OurStory() {
   const sortedYears = Object.keys(storyData).sort();
 
   return (
-    <div className="min-h-screen bg-black text-white scroll-smooth">
-      {/* Header Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-6 tracking-tight">
-            Our Story
-          </h1>
-          <div className="w-24 h-0.5 mx-auto bg-periwinkle-400 rounded-full mb-6"></div>
-          <p className="text-lg md:text-xl font-light text-periwinkle-200 max-w-3xl mx-auto leading-relaxed">
-            Every love story is beautiful, but ours is our favorite. From our first meeting to our upcoming wedding day,
-            these moments capture the journey that brought us together and the memories we&apos;ve created along the way.
-          </p>
-          <p className="text-sm text-periwinkle-300/70 mt-4 italic">
-            Tap or hover any photo to read the story behind the moment
-          </p>
-        </div>
+    <div className="min-h-screen bg-black text-white scroll-smooth relative selection:bg-periwinkle-500/30">
+      {/* Background Ambience */}
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+        <div className="absolute top-[-10%] left-[-20%] w-[70vw] h-[70vw] bg-periwinkle-900/20 rounded-full blur-[100px] opacity-40"></div>
+        <div className="absolute bottom-[-10%] right-[-20%] w-[60vw] h-[60vw] bg-indigo-900/20 rounded-full blur-[100px] opacity-40"></div>
       </div>
 
-      {/* Timeline Sections */}
-      <div className="relative">
-        {/* Vertical timeline line */}
-        <div className="absolute left-1/2 transform -translate-x-1/2 w-px bg-gradient-to-b from-periwinkle-400 to-periwinkle-600 opacity-30"
-          style={{ height: "calc(100% - 100px)" }}></div>
-
-        {sortedYears.map((year) => (
-          <TimelineSection
-            key={year}
-            year={year}
-            photos={storyData[year]}
-          />
-        ))}
-      </div>
-
-      {/* Trips Section */}
-      <div className="container mx-auto px-4 py-16">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6">
-            Our Adventures Together
-          </h2>
-          <div className="w-24 h-0.5 mx-auto bg-periwinkle-400 rounded-full"></div>
+      <div className="relative z-10">
+        {/* Header Section */}
+        <div className="container mx-auto px-4 py-16">
+          <div className="text-center mb-16 animate-fade-in-down">
+            <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-periwinkle-300 via-white to-periwinkle-300 mb-6 tracking-tight pb-2">
+              Our Story
+            </h1>
+            <div className="h-1 w-1/3 mx-auto bg-gradient-to-r from-transparent via-periwinkle-500 to-transparent rounded-full mb-6"></div>
+            <p className="text-lg md:text-xl font-light text-periwinkle-200 max-w-3xl mx-auto leading-relaxed">
+              Every love story is beautiful, but ours is our favorite. From our first meeting to our upcoming wedding day,
+              these moments capture the journey that brought us together and the memories we&apos;ve created along the way.
+            </p>
+            <p className="text-sm text-periwinkle-300/70 mt-4 italic inline-block px-4 py-1 rounded-full bg-white/5 border border-white/5 backdrop-blur-sm">
+              Tap or hover any photo to read the story behind the moment
+            </p>
+          </div>
         </div>
 
-        {tripsData.map((trip) => (
-          <TripMasonrySection
-            key={trip.folder}
-            title={trip.title}
-            photos={getTripPhotos(trip.folder, trip.photoCount)}
-          />
-        ))}
-      </div>
+        {/* Timeline Sections */}
+        <div className="relative">
+          {/* Vertical timeline line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-px bg-gradient-to-b from-transparent via-periwinkle-500/50 to-transparent"
+            style={{ height: "100%" }}></div>
 
-      {/* Footer message */}
-      <div className="container mx-auto px-4 py-16 text-center">
-        <div className="max-w-2xl mx-auto">
-          <p className="text-lg text-periwinkle-200 mb-4">
-            And this is just the beginning...
-          </p>
-          <p className="text-periwinkle-300">
-            We can&apos;t wait to add our wedding photos to this timeline and continue writing our story together!
-          </p>
+          {sortedYears.map((year) => (
+            <TimelineSection
+              key={year}
+              year={year}
+              photos={storyData[year]}
+            />
+          ))}
+        </div>
+
+        {/* Trips Section */}
+        <div className="container mx-auto px-4 py-16 relative">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Our Adventures Together
+            </h2>
+            <div className="h-1 w-24 mx-auto bg-gradient-to-r from-transparent via-periwinkle-500 to-transparent rounded-full"></div>
+          </div>
+
+          {tripsData.map((trip) => (
+            <TripMasonrySection
+              key={trip.folder}
+              title={trip.title}
+              photos={getTripPhotos(trip.folder, trip.photoCount)}
+            />
+          ))}
+        </div>
+
+        {/* Footer message */}
+        <div className="container mx-auto px-4 py-16 text-center">
+          <div className="max-w-2xl mx-auto p-8 rounded-3xl bg-white/5 border border-white/10 backdrop-blur-md">
+            <p className="text-xl text-periwinkle-200 mb-4 font-light">
+              And this is just the beginning...
+            </p>
+            <p className="text-white font-medium">
+              We can&apos;t wait to add our wedding photos to this timeline and continue writing our story together!
+            </p>
+          </div>
         </div>
       </div>
     </div>

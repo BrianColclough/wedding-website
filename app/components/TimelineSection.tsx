@@ -53,21 +53,24 @@ export default function TimelineSection({ year, photos }: TimelineSectionProps) 
                 }`}
         >
             {/* Year Header */}
-            <div className="text-center mb-12">
-                <h2 className="text-5xl md:text-6xl font-bold text-periwinkle-300 mb-4">
+            <div className="text-center mb-16 relative">
+                {/* Decorative background blur behind year */}
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-periwinkle-500/20 rounded-full blur-3xl -z-10"></div>
+
+                <h2 className="text-5xl md:text-7xl font-bold text-white mb-4 drop-shadow-lg">
                     {year}
                 </h2>
-                <div className="w-24 h-0.5 mx-auto bg-periwinkle-400 rounded-full"></div>
+                <div className="h-1 w-24 mx-auto bg-gradient-to-r from-transparent via-periwinkle-400 to-transparent rounded-full opacity-80"></div>
             </div>
 
             {/* Photos Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto px-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 perspective-1000">
                 {photos.map((photo, index) => (
                     <div
                         key={`${year}-${index}`}
                         className={`transition-all duration-700 ${hasEntered
-                            ? 'opacity-100 translate-y-0'
-                            : 'opacity-0 translate-y-4'
+                            ? 'opacity-100 translate-y-0 rotate-0'
+                            : 'opacity-0 translate-y-12 rotate-3'
                             }`}
                         style={{
                             transitionDelay: `${index * 100}ms`,

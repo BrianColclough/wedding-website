@@ -50,91 +50,98 @@ function Lightbox({ isOpen, onClose, currentIndex, onIndexChange, photos, title 
 
     return createPortal(
         <div
-            className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 md:p-8"
             onClick={onClose}
             role="dialog"
             aria-modal="true"
             aria-label={`${title} photo gallery`}
         >
-            {/* Close Button */}
-            <button
-                onClick={onClose}
-                className="absolute top-4 right-4 z-50 text-white hover:text-gray-300 transition-colors p-2"
-                aria-label="Close lightbox"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-8 w-8"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-            </button>
-
-            {/* Previous Button */}
-            {currentIndex > 0 && (
-                <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onIndexChange(currentIndex - 1);
-                    }}
-                    className="absolute left-4 z-50 text-white hover:text-gray-300 transition-colors p-2 bg-black bg-opacity-50 rounded-full"
-                    aria-label="Previous image"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-8 w-8"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-            )}
-
-            {/* Next Button */}
-            {currentIndex < photos.length - 1 && (
-                <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        onIndexChange(currentIndex + 1);
-                    }}
-                    className="absolute right-4 z-50 text-white hover:text-gray-300 transition-colors p-2 bg-black bg-opacity-50 rounded-full"
-                    aria-label="Next image"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-8 w-8"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
-            )}
-
-            {/* Image Container */}
+            {/* Modal Card */}
             <div
-                className="relative max-w-7xl max-h-[90vh] w-full h-full flex items-center justify-center"
+                className="relative w-full max-w-7xl h-[85vh] bg-white/5 border border-white/10 backdrop-blur-xl rounded-3xl overflow-hidden shadow-2xl flex flex-col"
                 onClick={(e) => e.stopPropagation()}
             >
-                <Image
-                    src={photos[currentIndex]}
-                    alt={`${title} photo ${currentIndex + 1}`}
-                    width={1920}
-                    height={1080}
-                    className="max-w-full max-h-[90vh] w-auto h-auto object-contain"
-                    priority
-                />
-            </div>
+                {/* Header / Controls */}
+                <div className="absolute top-0 left-0 right-0 p-4 z-20 flex justify-between items-start bg-gradient-to-b from-black/60 to-transparent">
+                    <div className="bg-black/40 backdrop-blur-md px-4 py-2 rounded-full border border-white/10">
+                        <span className="text-white font-medium">{currentIndex + 1} / {photos.length}</span>
+                    </div>
 
-            {/* Image Counter */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm bg-black bg-opacity-50 px-4 py-2 rounded-full">
-                {currentIndex + 1} / {photos.length}
+                    <button
+                        onClick={onClose}
+                        className="group bg-black/40 backdrop-blur-md p-2 rounded-full border border-white/10 hover:bg-white/10 transition-all duration-300"
+                        aria-label="Close lightbox"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className="h-6 w-6 text-white group-hover:text-periwinkle-300 transition-colors"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+
+                {/* Main Image Area */}
+                <div className="relative flex-1 w-full h-full flex items-center justify-center bg-black/20 p-2 md:p-4">
+                    <Image
+                        src={photos[currentIndex]}
+                        alt={`${title} photo ${currentIndex + 1}`}
+                        fill
+                        className="object-contain"
+                        priority
+                        sizes="95vw"
+                    />
+                </div>
+
+                {/* Navigation Buttons (Overlay) */}
+                <div className="absolute inset-y-0 left-0 flex items-center px-4 pointer-events-none">
+                    {currentIndex > 0 && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onIndexChange(currentIndex - 1);
+                            }}
+                            className="pointer-events-auto group bg-black/40 backdrop-blur-md p-3 rounded-full border border-white/10 hover:bg-white/10 hover:border-periwinkle-500/30 transition-all duration-300 transform hover:scale-110"
+                            aria-label="Previous image"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6 text-white group-hover:text-periwinkle-300"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                            </svg>
+                        </button>
+                    )}
+                </div>
+
+                <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none">
+                    {currentIndex < photos.length - 1 && (
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                onIndexChange(currentIndex + 1);
+                            }}
+                            className="pointer-events-auto group bg-black/40 backdrop-blur-md p-3 rounded-full border border-white/10 hover:bg-white/10 hover:border-periwinkle-500/30 transition-all duration-300 transform hover:scale-110"
+                            aria-label="Next image"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6 text-white group-hover:text-periwinkle-300"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    )}
+                </div>
             </div>
         </div>,
         document.body
@@ -205,10 +212,10 @@ export default function TripMasonrySection({ title, photos }: TripMasonrySection
             >
                 {/* Trip Title */}
                 <div className="text-center mb-12">
-                    <h3 className="text-3xl md:text-4xl font-bold text-periwinkle-300 mb-4">
+                    <h3 className="text-3xl md:text-5xl font-bold text-white mb-4 drop-shadow-md">
                         {title}
                     </h3>
-                    <div className="w-24 h-0.5 mx-auto bg-periwinkle-400 rounded-full"></div>
+                    <div className="w-24 h-1 mx-auto bg-gradient-to-r from-transparent via-periwinkle-400 to-transparent rounded-full opacity-80"></div>
                 </div>
 
                 {/* Masonry Grid */}
