@@ -19,7 +19,7 @@ export default function WeddingParty() {
       name: "Meredith Wilson",
       role: "Bridesmaid",
       relation: "Sister of the Bride",
-      image: "",
+      image: "/wedding-party/Meredith.webp",
     },
     {
       name: "Lindsay McCoy",
@@ -31,7 +31,7 @@ export default function WeddingParty() {
       name: "Payton Kyzer",
       role: "Bridesmaid",
       relation: "Friend of the Bride",
-      image: "",
+      image: "/wedding-party/Payton.webp",
     },
   ];
 
@@ -46,7 +46,7 @@ export default function WeddingParty() {
       name: "Patrick Winner",
       role: "Groomsman",
       relation: "Brother of the Bride",
-      image: null
+      image: "/wedding-party/Patrick.webp",
     },
   ];
 

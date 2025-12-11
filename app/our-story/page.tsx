@@ -294,7 +294,55 @@ export default function OurStory() {
         description: "",
         imageDate: "April 2025",
         imgSrc: "/Our story/2025/20250412_011538034_iOS_result.png"
-      }
+      },
+      {
+        imgName: "2025-7",
+        description: "",
+        imageDate: "May 2025",
+        imgSrc: "/Our story/2025/IMG_4065_result.jpg"
+      },
+      {
+        imgName: "2025-8",
+        description: "",
+        imageDate: "June 2025",
+        imgSrc: "/Our story/2025/IMG_5850_result.jpg"
+      },
+      {
+        imgName: "2025-9",
+        description: "",
+        imageDate: "July 2025",
+        imgSrc: "/Our story/2025/IMG_6580_result.jpg"
+      },
+      {
+        imgName: "2025-10",
+        description: "",
+        imageDate: "August 2025",
+        imgSrc: "/Our story/2025/IMG_7873_result.jpg"
+      },
+      {
+        imgName: "2025-11",
+        description: "",
+        imageDate: "September 2025",
+        imgSrc: "/Our story/2025/IMG_8279_result.jpg"
+      },
+      {
+        imgName: "2025-12",
+        description: "",
+        imageDate: "October 2025",
+        imgSrc: "/Our story/2025/IMG_1306_result.jpg"
+      },
+      {
+        imgName: "2025-14",
+        description: "",
+        imageDate: "November 2025",
+        imgSrc: "/Our story/2025/002185820033.jpg"
+      },
+      {
+        imgName: "2025-13",
+        description: "",
+        imageDate: "December 2025",
+        imgSrc: "/Our story/2025/IMG_0580_result.jpg"
+      },
     ]
   };
 
