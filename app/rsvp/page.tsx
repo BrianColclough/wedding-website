@@ -1,9 +1,9 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
+import confetti from "canvas-confetti";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
-import confetti from "canvas-confetti";
 
 type RSVPForm = {
   first_name: string;
@@ -167,7 +167,7 @@ export default function RSVP() {
             </h2>
             <div className="flex flex-col gap-2 whitespace-break-spaces">
               <p className="font-light text-periwinkle-200">
-                Please RSVP by March 1st to confirm your attendance! Let us know if you&apos;ll be bringing a guest, if you&apos;d like to reserve a room in our hotel block, and if you&apos;re planning to use the shuttle service.
+                Please RSVP by March 15th to confirm your attendance! Let us know if you&apos;ll be bringing a guest, if you&apos;d like to reserve a room in our hotel block, and if you&apos;re planning to use the shuttle service.
               </p>
               <p className="font-light text-periwinkle-200">
                 A complimentary shuttle will pick up guests from the hotel and take them to the venue before the ceremony, and later that evening, it will bring everyone back to the hotel. If you plan to enjoy drinks at the reception, we strongly encourage taking advantage of the shuttle so everyone can get back safely!

@@ -232,6 +232,68 @@ export default function OurStory() {
         description: "Thanksgiving trip to Pennsylvania, at the Corning Glass Museum",
         imageDate: "November 2024",
         imgSrc: "/Our story/2024/2024-11.jpg"
+      },
+      {
+        imgName: "2024-10",
+        description: "",
+        imageDate: "December 2024",
+        imgSrc: "/Our story/2024/20241214_025950708_iOS_result.png"
+      },
+      {
+        imgName: "2024-11",
+        description: "",
+        imageDate: "December 2024",
+        imgSrc: "/Our story/2024/20241222_160208778_iOS_result.png"
+      },
+      {
+        imgName: "2024-12",
+        description: "",
+        imageDate: "December 2024",
+        imgSrc: "/Our story/2024/20241224_235819460_iOS_result.png"
+      },
+      {
+        imgName: "2024-13",
+        description: "",
+        imageDate: "2024",
+        imgSrc: "/Our story/2024/DSCF4488_result.jpg"
+      }
+    ],
+    "2025": [
+      {
+        imgName: "2025-1",
+        description: "",
+        imageDate: "January 2025",
+        imgSrc: "/Our story/2024/20250101_040329542_iOS_result.jpg"
+      },
+      {
+        imgName: "2025-2",
+        description: "",
+        imageDate: "February 2025",
+        imgSrc: "/Our story/2025/20250215_144706902_iOS_result.png"
+      },
+      {
+        imgName: "2025-3",
+        description: "",
+        imageDate: "February 2025",
+        imgSrc: "/Our story/2025/20250218_170059395_iOS_result.jpg"
+      },
+      {
+        imgName: "2025-4",
+        description: "",
+        imageDate: "March 2025",
+        imgSrc: "/Our story/2025/20250309_032317088_iOS_result.png"
+      },
+      {
+        imgName: "2025-5",
+        description: "",
+        imageDate: "March 2025",
+        imgSrc: "/Our story/2025/20250328_212831258_iOS_result.png"
+      },
+      {
+        imgName: "2025-6",
+        description: "",
+        imageDate: "April 2025",
+        imgSrc: "/Our story/2025/20250412_011538034_iOS_result.png"
       }
     ]
   };
