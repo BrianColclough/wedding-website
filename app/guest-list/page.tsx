@@ -28,7 +28,12 @@ export default function SearchableGuestList() {
     useEffect(() => {
         async function fetchGuests() {
             const supabase = await createClient();
-            const { data, error } = await supabase.from("Guest List").select("*").eq("attending", true);
+            const { data, error } = await supabase
+                .from("Guest List")
+                .select(
+                    "id, first_name, last_name, is_plus_one, plus_one_host, interested_in_hotel_block, interested_in_shuttle"
+                )
+                .eq("attending", true);
             if (error) {
                 setError(error);
             } else {
@@ -113,7 +118,7 @@ export default function SearchableGuestList() {
                     {/* Loading State */}
                     {loading && (
                         <div className="py-12">
-                            <LoadingSpinner message="Loading Guests..." />
+                            <LoadingSpinner message="Loading Guests..." size="xl" />
                         </div>
                     )}
 
