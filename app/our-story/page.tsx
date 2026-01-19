@@ -414,9 +414,6 @@ export default function OurStory() {
             <p className="text-xl text-periwinkle-200 mb-4 font-light">
               And this is just the beginning...
             </p>
-            <p className="text-white font-medium">
-              We can&apos;t wait to add our wedding photos to this timeline and continue writing our story together!
-            </p>
           </div>
         </div>
       </div>

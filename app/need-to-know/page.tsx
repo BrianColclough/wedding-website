@@ -80,8 +80,7 @@ export default function Info() {
                 { time: "5:00 pm", event: "Cocktail Hour" },
                 { time: "6:00 pm", event: "Dinner & Reception" },
                 { time: "8:00 pm", event: "Dancing & Celebration" },
-                { time: "10:30 pm", event: "Sendoff" },
-                { time: "10:45 pm", event: "Return to Hotel" },
+                { time: "10:00 pm", event: "Sendoff and Return to Hotel" },
               ].map((item, i) => (
                 <div key={i} className="mb-6 relative group last:mb-0">
                   <div className="absolute -left-[21px] top-1.5 h-3 w-3 rounded-full bg-periwinkle-500 ring-4 ring-black group-hover:scale-125 transition-transform"></div>
