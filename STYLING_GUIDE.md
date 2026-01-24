@@ -24,7 +24,7 @@ Use these specific Tailwind classes to maintain consistency.
 *   **Ambient Glow**:
     *   Primary: `bg-periwinkle-900/20`
     *   Secondary: `bg-indigo-900/20`
-    *   Use `blur-[100px]` and `opacity-40` for background orbs.
+    *   Use the `<BackgroundAmbience />` component which uses performant radial gradients instead of heavy CSS blurs.
 
 ### Typography Colors
 *   **Headings (Gradient)**: `bg-clip-text text-transparent bg-gradient-to-r from-periwinkle-300 via-white to-periwinkle-300`
@@ -53,8 +53,7 @@ Every page should have this structure at the top level:
 <div className="min-h-screen bg-black text-white p-4 md:p-8 relative selection:bg-periwinkle-500/30">
   {/* Background Ambience */}
   <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-    <div className="absolute top-[-10%] left-[-20%] w-[70vw] h-[70vw] bg-periwinkle-900/20 rounded-full blur-[100px] opacity-40"></div>
-    <div className="absolute bottom-[-10%] right-[-20%] w-[60vw] h-[60vw] bg-indigo-900/20 rounded-full blur-[100px] opacity-40"></div>
+    <BackgroundAmbience />
   </div>
   
   <div className="max-w-7xl mx-auto relative z-10">

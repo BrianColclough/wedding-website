@@ -1,4 +1,5 @@
 import Image from "next/image";
+import BackgroundAmbience from "./components/BackgroundAmbience";
 import CountdownTimer from "./components/CountdownTimer";
 import FloatingHearts from "./components/FloatingHearts";
 
@@ -8,10 +9,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-black text-white relative selection:bg-periwinkle-500/30">
       {/* Background Ambience */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-20%] w-[70vw] h-[70vw] bg-periwinkle-900/20 rounded-full blur-[100px] opacity-40"></div>
-        <div className="absolute bottom-[-10%] right-[-20%] w-[60vw] h-[60vw] bg-indigo-900/20 rounded-full blur-[100px] opacity-40"></div>
-      </div>
+      <BackgroundAmbience />
 
       <div className="relative z-10">
         {/* Hero Section */}

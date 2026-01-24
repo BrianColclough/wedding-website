@@ -1,14 +1,12 @@
 import MapWithMarkers from "@/app/components/MapWithMarkers";
 import WeatherWidget from "@/app/components/WeatherWidget";
+import BackgroundAmbience from "@/app/components/BackgroundAmbience";
 
 export default function Info() {
   return (
     <div className="min-h-screen bg-black text-white p-4 md:p-8 relative selection:bg-periwinkle-500/30">
       {/* Background Ambience */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-20%] w-[70vw] h-[70vw] bg-periwinkle-900/20 rounded-full blur-[100px] opacity-40"></div>
-        <div className="absolute bottom-[-10%] right-[-20%] w-[60vw] h-[60vw] bg-indigo-900/20 rounded-full blur-[100px] opacity-40"></div>
-      </div>
+      <BackgroundAmbience />
 
       <div className="max-w-7xl mx-auto relative z-10">
         {/* Header */}

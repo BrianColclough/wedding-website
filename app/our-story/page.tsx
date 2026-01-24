@@ -2,6 +2,7 @@
 
 import TimelineSection from "@/app/components/TimelineSection";
 import TripMasonrySection from "@/app/components/TripMasonrySection";
+import BackgroundAmbience from "@/app/components/BackgroundAmbience";
 
 interface PhotoData {
   imgName: string;
@@ -352,10 +353,7 @@ export default function OurStory() {
   return (
     <div className="min-h-screen bg-black text-white scroll-smooth relative selection:bg-periwinkle-500/30">
       {/* Background Ambience */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-20%] w-[70vw] h-[70vw] bg-periwinkle-900/20 rounded-full blur-[100px] opacity-40"></div>
-        <div className="absolute bottom-[-10%] right-[-20%] w-[60vw] h-[60vw] bg-indigo-900/20 rounded-full blur-[100px] opacity-40"></div>
-      </div>
+      <BackgroundAmbience />
 
       <div className="relative z-10">
         {/* Header Section */}

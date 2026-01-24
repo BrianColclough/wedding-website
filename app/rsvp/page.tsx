@@ -1,6 +1,7 @@
 "use client";
 
 import { createClient } from "@/utils/supabase/client";
+import BackgroundAmbience from "@/app/components/BackgroundAmbience";
 import confetti from "canvas-confetti";
 import Link from "next/link";
 import { ChangeEvent, useState } from "react";
@@ -158,10 +159,7 @@ export default function RSVP() {
   return (
     <div className="min-h-screen bg-black text-white p-4 md:p-8 relative selection:bg-periwinkle-500/30 overflow-hidden">
       {/* Background Ambience */}
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-[-10%] left-[-20%] w-[70vw] h-[70vw] bg-periwinkle-900/20 rounded-full blur-[100px] opacity-40"></div>
-        <div className="absolute bottom-[-10%] right-[-20%] w-[60vw] h-[60vw] bg-indigo-900/20 rounded-full blur-[100px] opacity-40"></div>
-      </div>
+      <BackgroundAmbience />
 
       <div className="max-w-7xl mx-auto relative z-10 flex flex-col items-center">
         <div className="rounded-3xl bg-white/5 border border-white/10 p-8 md:p-12 backdrop-blur-md transition-all hover:border-periwinkle-500/30 w-full max-w-2xl mb-8">
