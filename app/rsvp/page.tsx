@@ -18,6 +18,10 @@ type RSVPForm = {
   plusOne_last_name: string;
 };
 
+const RSVP_DEADLINE = new Date("2026-03-15T23:59:59.999-04:00");
+const ALEXIS_PHONE_NUMBER = "(856) 220-1476";
+const ALEXIS_PHONE_HREF = "tel:+18562201476";
+
 export default function RSVP() {
   const [formData, setFormData] = useState<RSVPForm>({
     first_name: "",
@@ -34,6 +38,7 @@ export default function RSVP() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const isRsvpOpen = new Date() <= RSVP_DEADLINE;
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -63,6 +68,13 @@ export default function RSVP() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (new Date() > RSVP_DEADLINE) {
+      setError(
+        `The RSVP window has now closed. If you have questions or concerns, please contact Alexis at ${ALEXIS_PHONE_NUMBER}.`,
+      );
+      return;
+    }
 
     if (!formData.first_name || !formData.last_name) {
       setError("Please fill in all required fields");
@@ -208,7 +220,7 @@ export default function RSVP() {
                 celebrating with you! 🎉
               </p>
             </div>
-          ) : (
+          ) : isRsvpOpen ? (
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
                 <div className="p-4 bg-red-900/40 border border-red-500/30 text-red-200 rounded-xl text-center font-medium backdrop-blur-sm">
@@ -428,6 +440,37 @@ export default function RSVP() {
                 </button>
               </div>
             </form>
+          ) : (
+            <div className="text-center py-8 space-y-4">
+              <svg
+                className="w-20 h-20 text-periwinkle-300 mx-auto mb-6 drop-shadow-[0_0_15px_rgba(165,180,252,0.45)]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.75}
+                  d="M12 8v4m0 4h.01M4.93 19h14.14c1.54 0 2.5-1.67 1.73-3L13.73 3.8c-.77-1.33-2.69-1.33-3.46 0L3.2 16c-.77 1.33.19 3 1.73 3z"
+                />
+              </svg>
+              <h2 className="text-3xl font-bold text-white">RSVP Window Closed</h2>
+              <p className="text-periwinkle-200 text-lg">
+                The window for RSVPs has now closed.
+              </p>
+              <p className="text-periwinkle-200/90">
+                If you have questions or concerns, please contact Alexis at{" "}
+                <a
+                  href={ALEXIS_PHONE_HREF}
+                  className="text-periwinkle-300 hover:text-white transition-colors font-medium decoration-periwinkle-500/30 underline underline-offset-4 hover:decoration-periwinkle-300"
+                >
+                  {ALEXIS_PHONE_NUMBER}
+                </a>
+                .
+              </p>
+            </div>
           )}
         </div>
       </div>
