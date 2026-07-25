@@ -44,6 +44,12 @@
   flex-direction: column;
   align-items: center;
   gap: clamp(16px, 2.5vw, 26px);
+
+  /* Vertically centres the game in the viewport. Auto margins rather than
+     justify-content: center on the parent, because auto margins collapse to zero
+     once the content is taller than the screen — centring a flex child that
+     overflows clips the top of it, and the quote is the first thing to go. */
+  margin-block: auto;
 }
 
 /* The TV screen gets a wider column and larger type throughout. */
@@ -73,6 +79,12 @@
     min-width: 0;
   }
 
+  /* The quote column is the tall one, so a short leaderboard reads as stranded
+     in the top corner. Centre it against the quote instead. */
+  .wsi-root.wsi-tv .wsi-play-side {
+    align-self: center;
+  }
+
   /* Compact enough that a full family fits down the side column. */
   .wsi-root.wsi-tv .wsi-board-row {
     padding: 6px 12px;
@@ -100,7 +112,7 @@
     padding: clamp(26px, 2.2vw, 36px) clamp(18px, 1.8vw, 30px) clamp(16px, 1.4vw, 22px);
   }
   .wsi-root.wsi-tv .wsi-card.wsi-stamped {
-    padding-bottom: 124px;
+    padding-bottom: 134px;
   }
   .wsi-root.wsi-tv .wsi-option {
     font-size: clamp(15px, 1.5vw, 26px);
@@ -180,6 +192,14 @@
   box-shadow: 12px 12px 0 rgba(27, 18, 48, 0.55);
   padding: clamp(34px, 4vw, 54px) clamp(20px, 3vw, 40px) clamp(24px, 3vw, 34px);
   transform: rotate(-0.7deg);
+
+  /* Centres the quote in the card instead of pinning it to the top-left. The
+     card is much wider than the prototype's was, so a short quote otherwise
+     reads as stranded in the corner. Counter, date and stamp are absolutely
+     positioned, so only the quote and its context are in flow here. */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 /* strip of tape across the top */
@@ -202,7 +222,7 @@
    looking at it. Only applied once the stamp exists, so the question phase
    doesn't carry dead space. */
 .wsi-card.wsi-stamped {
-  padding-bottom: 84px;
+  padding-bottom: 96px;
 }
 
 .wsi-card.wsi-flat {
@@ -232,6 +252,7 @@
 
 .wsi-ctx {
   margin: 0 0 14px;
+  text-align: center;
   font-family: var(--font-wsi-util), ui-monospace, monospace;
   font-size: clamp(11px, 1.1vw, 15px);
   line-height: 1.5;
@@ -247,6 +268,8 @@
   font-size: clamp(23px, 5.6vw, 42px);
   line-height: 1.16;
   letter-spacing: -0.01em;
+  text-align: center;
+  text-wrap: balance;
 }
 .wsi-quote::before {
   content: "\201C";
