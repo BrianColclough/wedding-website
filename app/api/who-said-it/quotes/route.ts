@@ -1,5 +1,5 @@
 import { secretMatches } from "@/lib/who-said-it/game";
-import { jsonError, jsonNoStore } from "@/lib/who-said-it/server";
+import { hostPinUnavailable, jsonError, jsonNoStore } from "@/lib/who-said-it/server";
 import { createAdminClient } from "@/utils/supabase/admin";
 
 export const dynamic = "force-dynamic";
@@ -17,6 +17,9 @@ function authorized(pin: unknown) {
 }
 
 export async function GET(request: Request) {
+  const misconfigured = hostPinUnavailable();
+  if (misconfigured) return misconfigured;
+
   const url = new URL(request.url);
   if (!authorized(url.searchParams.get("pin"))) return jsonError("wrong PIN", 401);
 
@@ -56,6 +59,9 @@ export async function POST(request: Request) {
   } catch {
     return jsonError("expected a JSON body");
   }
+
+  const misconfigured = hostPinUnavailable();
+  if (misconfigured) return misconfigured;
 
   if (!authorized(body.pin)) return jsonError("wrong PIN", 401);
 

@@ -5,7 +5,7 @@ import {
   randomRoomCode,
   secretMatches,
 } from "@/lib/who-said-it/game";
-import { buildDeck, jsonError, jsonNoStore } from "@/lib/who-said-it/server";
+import { buildDeck, hostPinUnavailable, jsonError, jsonNoStore } from "@/lib/who-said-it/server";
 import { createAdminClient } from "@/utils/supabase/admin";
 
 export const dynamic = "force-dynamic";
@@ -18,6 +18,9 @@ export async function POST(request: Request) {
   } catch {
     return jsonError("expected a JSON body");
   }
+
+  const misconfigured = hostPinUnavailable();
+  if (misconfigured) return misconfigured;
 
   if (!secretMatches(body.pin, process.env.WHO_SAID_IT_HOST_PIN)) {
     return jsonError("wrong PIN", 401);

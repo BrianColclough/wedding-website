@@ -22,6 +22,24 @@ export function jsonError(message: string, status = 400) {
   return jsonNoStore({ error: message }, status);
 }
 
+/**
+ * Returns an error Response when the host PIN can't be checked at all, or null
+ * when it's safe to compare against.
+ *
+ * Worth the extra branch: without it a server that has no PIN configured
+ * rejects every attempt as "wrong PIN", which sends you hunting for a typo when
+ * the real problem is a missing env var on a fresh deploy.
+ */
+export function hostPinUnavailable() {
+  if (!process.env.WHO_SAID_IT_HOST_PIN) {
+    return jsonError(
+      "No host PIN is set on the server. Add WHO_SAID_IT_HOST_PIN to the environment and redeploy.",
+      503
+    );
+  }
+  return null;
+}
+
 type Db = SupabaseClient;
 
 /**
