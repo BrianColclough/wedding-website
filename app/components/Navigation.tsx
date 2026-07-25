@@ -1,10 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  // The game runs full-screen on a TV; site chrome has no place there.
+  const isGame = pathname?.startsWith("/who-said-it") ?? false;
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -23,6 +28,8 @@ const Navigation = () => {
     { href: "/registry", label: "Registry" },
     { href: "/guest-list", label: "Guest List" },
   ];
+
+  if (isGame) return null;
 
   return (
     <>

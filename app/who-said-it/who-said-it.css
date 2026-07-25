@@ -1,0 +1,810 @@
+/* ===========================================================================
+   Who Said It? — ported from the original prototype.
+
+   EVERY rule is scoped under .wsi-root. The wedding site's root layout is still
+   an ancestor of these pages (it supplies bg-black, Geist and <Navigation />),
+   so an unscoped rule here would leak straight into the rest of the site.
+   =========================================================================== */
+
+.wsi-root {
+  --ink: #1b1230;
+  --grape: #6b2fd6;
+  --pop: #ff3e9a;
+  --zap: #ffe23d;
+  --mint: #3ce0c0;
+  --paper: #fff6e8;
+  --dim: #d9d2e0;
+
+  position: relative;
+  min-height: 100svh;
+  width: 100%;
+  padding: clamp(16px, 3vw, 34px) clamp(14px, 3vw, 28px) clamp(40px, 6vw, 72px);
+  color: var(--ink);
+  font-family: var(--font-wsi-body), Georgia, "Times New Roman", serif;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(255, 226, 61, 0.3) 0 22%, transparent 23%),
+    radial-gradient(circle at 88% 82%, rgba(60, 224, 192, 0.28) 0 18%, transparent 19%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0 14px, transparent 14px 28px),
+    var(--grape);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wsi-root *,
+.wsi-root *::before,
+.wsi-root *::after {
+  box-sizing: border-box;
+}
+
+.wsi-stack {
+  width: 100%;
+  max-width: 780px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(16px, 2.5vw, 26px);
+}
+
+/* The TV screen gets a wider column and larger type throughout. */
+.wsi-root.wsi-tv .wsi-stack {
+  max-width: min(1500px, 94vw);
+}
+
+/* A shared laptop screen is wide and short — roughly 1280x720 once the browser
+   chrome is gone. Stacking quote, options, roster and leaderboard vertically
+   overflows it the moment more than a couple of people are playing, and the host
+   loses sight of their own advance button. So during play the TV splits into
+   two columns and spends the horizontal room it actually has. */
+@media (min-width: 1000px) {
+  .wsi-root.wsi-tv .wsi-play {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(252px, 0.7fr);
+    gap: clamp(16px, 1.8vw, 32px);
+    align-items: start;
+    width: 100%;
+  }
+
+  .wsi-root.wsi-tv .wsi-play-main,
+  .wsi-root.wsi-tv .wsi-play-side {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(10px, 1.2vw, 18px);
+    min-width: 0;
+  }
+
+  /* Compact enough that a full family fits down the side column. */
+  .wsi-root.wsi-tv .wsi-board-row {
+    padding: 6px 12px;
+    box-shadow: 3px 3px 0 rgba(27, 18, 48, 0.5);
+  }
+  .wsi-root.wsi-tv .wsi-board-name {
+    font-size: clamp(13px, 1.15vw, 19px);
+  }
+  .wsi-root.wsi-tv .wsi-board-num {
+    font-size: clamp(14px, 1.2vw, 21px);
+  }
+  /* Sized so even the longest quote in the book stays at three lines, which is
+     what keeps the card short enough to leave room for the stamp below it. */
+  .wsi-root.wsi-tv .wsi-quote {
+    font-size: clamp(24px, 2.6vw, 42px);
+  }
+  .wsi-root.wsi-tv .wsi-stamp-who {
+    font-size: clamp(22px, 2.4vw, 40px);
+  }
+
+  /* The min-height is what keeps the answer stamp off the quote. The stamp is
+     anchored to the card's bottom-right corner, so on a one-line quote a
+     content-height card puts it straight through the text. */
+  .wsi-root.wsi-tv .wsi-card {
+    padding: clamp(26px, 2.2vw, 36px) clamp(18px, 1.8vw, 30px) clamp(16px, 1.4vw, 22px);
+  }
+  .wsi-root.wsi-tv .wsi-card.wsi-stamped {
+    padding-bottom: 124px;
+  }
+  .wsi-root.wsi-tv .wsi-option {
+    font-size: clamp(15px, 1.5vw, 26px);
+    padding: clamp(8px, 0.85vw, 14px) 10px;
+  }
+  .wsi-root.wsi-tv .wsi-verdict {
+    min-height: 0;
+  }
+
+  /* A shared screen has no scrollbar the host can reach, so reclaim the page
+     padding and gaps that a phone wants but a TV just loses content to. */
+  .wsi-root.wsi-tv {
+    padding-top: clamp(8px, 0.8vw, 14px);
+    padding-bottom: clamp(8px, 0.8vw, 14px);
+  }
+  .wsi-root.wsi-tv .wsi-stack {
+    gap: clamp(8px, 0.8vw, 13px);
+  }
+  .wsi-root.wsi-tv .wsi-btn {
+    padding: clamp(11px, 1.1vw, 15px) clamp(18px, 2vw, 28px);
+  }
+}
+
+/* ------------------------------------------------------------- masthead ---- */
+
+.wsi-head {
+  text-align: center;
+}
+
+.wsi-eyebrow {
+  margin: 0 0 10px;
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: clamp(10px, 1.1vw, 13px);
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--zap);
+}
+
+.wsi-title {
+  margin: 0;
+  font-family: var(--font-wsi-display), "Arial Black", Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(30px, 7vw, 62px);
+  line-height: 0.92;
+  color: var(--paper);
+  text-shadow:
+    4px 4px 0 var(--pop),
+    8px 8px 0 var(--ink);
+  transform: rotate(-2.2deg);
+}
+
+.wsi-root.wsi-tv .wsi-title {
+  font-size: clamp(34px, 4.2vw, 64px);
+}
+
+.wsi-sub {
+  display: inline-block;
+  margin-top: 16px;
+  padding: 5px 12px;
+  background: var(--zap);
+  border: 2px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: clamp(10px, 1.1vw, 13px);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transform: rotate(1.4deg);
+}
+
+/* ----------------------------------------------------------------- card ---- */
+
+.wsi-card {
+  position: relative;
+  width: 100%;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 12px 12px 0 rgba(27, 18, 48, 0.55);
+  padding: clamp(34px, 4vw, 54px) clamp(20px, 3vw, 40px) clamp(24px, 3vw, 34px);
+  transform: rotate(-0.7deg);
+}
+
+/* strip of tape across the top */
+.wsi-card::before {
+  content: "";
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  width: 132px;
+  height: 32px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgba(255, 226, 61, 0.72);
+  border-left: 1px dashed rgba(27, 18, 48, 0.35);
+  border-right: 1px dashed rgba(27, 18, 48, 0.35);
+}
+
+/* The stamp is anchored to the card's bottom-right and hangs 26px below it, so
+   it reaches ~70px back up into the card. Without reserved space a long quote
+   runs underneath and becomes unreadable at exactly the moment everyone is
+   looking at it. Only applied once the stamp exists, so the question phase
+   doesn't carry dead space. */
+.wsi-card.wsi-stamped {
+  padding-bottom: 84px;
+}
+
+.wsi-card.wsi-flat {
+  transform: none;
+}
+.wsi-card.wsi-flat::before {
+  display: none;
+}
+
+.wsi-counter,
+.wsi-datetag {
+  position: absolute;
+  top: 12px;
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: clamp(10px, 1vw, 13px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(27, 18, 48, 0.55);
+}
+.wsi-counter {
+  left: 16px;
+}
+.wsi-datetag {
+  right: 16px;
+  letter-spacing: 0.1em;
+}
+
+.wsi-ctx {
+  margin: 0 0 14px;
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: clamp(11px, 1.1vw, 15px);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--grape);
+}
+
+.wsi-quote {
+  margin: 0;
+  font-family: var(--font-wsi-body), Georgia, serif;
+  font-style: italic;
+  font-size: clamp(23px, 5.6vw, 42px);
+  line-height: 1.16;
+  letter-spacing: -0.01em;
+}
+.wsi-quote::before {
+  content: "\201C";
+}
+.wsi-quote::after {
+  content: "\201D";
+}
+
+.wsi-root.wsi-tv .wsi-quote {
+  font-size: clamp(34px, 4.6vw, 76px);
+}
+
+/* ---------------------------------------------------------------- stamp ---- */
+
+.wsi-stamp {
+  position: absolute;
+  right: -10px;
+  bottom: -26px;
+  max-width: 78%;
+  padding: 10px 18px 12px;
+  border: 4px double var(--pop);
+  background: rgba(255, 246, 232, 0.92);
+  color: var(--pop);
+  text-align: center;
+  transform: rotate(-9deg);
+  animation: wsi-slam 0.34s cubic-bezier(0.2, 1.4, 0.4, 1) both;
+}
+
+.wsi-stamp-said {
+  display: block;
+  margin-bottom: 2px;
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: clamp(9px, 0.9vw, 12px);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(27, 18, 48, 0.6);
+}
+
+.wsi-stamp-who {
+  display: block;
+  font-family: var(--font-wsi-display), "Arial Black", Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(19px, 5vw, 32px);
+  line-height: 1;
+}
+
+.wsi-root.wsi-tv .wsi-stamp-who {
+  font-size: clamp(28px, 3.6vw, 58px);
+}
+
+@keyframes wsi-slam {
+  0% {
+    opacity: 0;
+    transform: rotate(-24deg) scale(2.4);
+  }
+  70% {
+    opacity: 1;
+    transform: rotate(-7deg) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-9deg) scale(1);
+  }
+}
+
+/* -------------------------------------------------------------- options ---- */
+
+.wsi-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(8px, 1.2vw, 14px);
+  width: 100%;
+}
+
+.wsi-option {
+  font-family: var(--font-wsi-display), "Arial Black", Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(13px, 3vw, 17px);
+  line-height: 1.15;
+  padding: clamp(14px, 2.4vw, 22px) 10px;
+  background: var(--paper);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+
+.wsi-root.wsi-tv .wsi-option {
+  font-size: clamp(18px, 2vw, 34px);
+  padding: clamp(18px, 1.8vw, 30px) 12px;
+  cursor: default;
+}
+
+/* Phones need a genuinely thumb-sized target. */
+.wsi-root.wsi-phone .wsi-option {
+  min-height: 74px;
+}
+
+.wsi-option:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 7px 7px 0 var(--ink);
+}
+.wsi-option:active:not(:disabled) {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.wsi-option:disabled {
+  cursor: default;
+}
+
+.wsi-option.wsi-right {
+  background: var(--mint);
+  box-shadow: 5px 5px 0 var(--ink);
+  transform: none;
+}
+.wsi-option.wsi-wrong {
+  background: var(--dim);
+  color: rgba(27, 18, 48, 0.45);
+  text-decoration: line-through;
+  transform: none;
+}
+.wsi-option.wsi-faded {
+  opacity: 0.45;
+  transform: none;
+}
+.wsi-option.wsi-chosen {
+  outline: 4px solid var(--zap);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------- verdict ---- */
+
+.wsi-verdict {
+  margin: 0;
+  min-height: 26px;
+  text-align: center;
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: clamp(12px, 1.4vw, 17px);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--zap);
+}
+
+.wsi-note {
+  margin: 0;
+  text-align: center;
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: clamp(11px, 1.2vw, 14px);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 246, 232, 0.72);
+}
+
+.wsi-error {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--pop);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  color: var(--paper);
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------- buttons ---- */
+
+.wsi-btn {
+  font-family: var(--font-wsi-display), "Arial Black", Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(15px, 2.2vw, 21px);
+  padding: clamp(14px, 1.8vw, 20px) clamp(20px, 2.4vw, 30px);
+  background: var(--pop);
+  color: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  cursor: pointer;
+  transform: rotate(-1deg);
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+}
+.wsi-btn:hover:not(:disabled) {
+  transform: rotate(-1deg) translate(-2px, -2px);
+  box-shadow: 9px 9px 0 var(--ink);
+}
+.wsi-btn:active:not(:disabled) {
+  transform: rotate(-1deg) translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+.wsi-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.wsi-btn.wsi-btn-mint {
+  background: var(--mint);
+  color: var(--ink);
+}
+.wsi-btn.wsi-btn-zap {
+  background: var(--zap);
+  color: var(--ink);
+}
+
+.wsi-root.wsi-tv .wsi-btn {
+  font-size: clamp(18px, 1.8vw, 30px);
+}
+
+.wsi-link {
+  background: none;
+  border: none;
+  border-bottom: 2px dotted var(--paper);
+  color: var(--paper);
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 2px;
+  cursor: pointer;
+}
+.wsi-link:hover {
+  color: var(--zap);
+  border-bottom-color: var(--zap);
+}
+
+.wsi-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ----------------------------------------------------------------- forms ---- */
+
+.wsi-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+}
+
+.wsi-label {
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(27, 18, 48, 0.6);
+}
+
+.wsi-input {
+  width: 100%;
+  padding: 14px 12px;
+  background: #fff;
+  border: 3px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: 17px;
+  letter-spacing: 0.08em;
+}
+.wsi-input:focus {
+  outline: 4px solid var(--zap);
+  outline-offset: 2px;
+}
+.wsi-input.wsi-input-code {
+  font-family: var(--font-wsi-display), Impact, sans-serif;
+  font-size: 30px;
+  letter-spacing: 0.3em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------ room code ---- */
+
+/* Sized so the code and the QR sit side by side and the whole lobby — masthead,
+   roster and Start button included — clears a 720px-tall shared screen without
+   scrolling. Still legible from a sofa. */
+.wsi-code {
+  font-family: var(--font-wsi-display), "Arial Black", Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(56px, 9vw, 148px);
+  line-height: 0.86;
+  letter-spacing: 0.06em;
+  color: var(--zap);
+  text-shadow:
+    5px 5px 0 var(--pop),
+    10px 10px 0 var(--ink);
+  margin: 0;
+}
+
+.wsi-join-url {
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: clamp(13px, 1.6vw, 22px);
+  letter-spacing: 0.08em;
+  color: var(--paper);
+  word-break: break-all;
+}
+
+.wsi-qr {
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 8px 8px 0 var(--ink);
+  padding: 10px;
+  line-height: 0;
+}
+.wsi-qr img {
+  display: block;
+  width: clamp(104px, 11vw, 168px);
+  height: auto;
+  image-rendering: pixelated;
+}
+
+.wsi-lobby-split {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(20px, 4vw, 52px);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------- roster ---- */
+
+.wsi-roster {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wsi-chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
+  font-family: var(--font-wsi-display), Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(12px, 1.5vw, 20px);
+  color: var(--ink);
+}
+.wsi-chip:nth-child(even) {
+  transform: rotate(1.2deg);
+}
+.wsi-chip:nth-child(odd) {
+  transform: rotate(-1.4deg);
+}
+
+.wsi-chip.wsi-locked {
+  background: var(--mint);
+}
+.wsi-chip.wsi-chip-right {
+  background: var(--mint);
+}
+.wsi-chip.wsi-chip-wrong {
+  background: var(--dim);
+  color: rgba(27, 18, 48, 0.5);
+}
+
+.wsi-chip-score {
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: 0.72em;
+  letter-spacing: 0.06em;
+  color: rgba(27, 18, 48, 0.55);
+}
+
+.wsi-chip-guess {
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: 0.66em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(27, 18, 48, 0.55);
+}
+
+/* ---------------------------------------------------------- leaderboard ---- */
+
+.wsi-board {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.wsi-board-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: clamp(8px, 1.4vw, 18px);
+  padding: clamp(7px, 1vw, 12px) clamp(10px, 1.4vw, 16px);
+  background: rgba(255, 246, 232, 0.93);
+  border: 3px solid var(--ink);
+  box-shadow: 4px 4px 0 rgba(27, 18, 48, 0.5);
+}
+
+.wsi-board-row.wsi-leader {
+  background: var(--zap);
+}
+
+.wsi-board-rank {
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: clamp(11px, 1.2vw, 16px);
+  letter-spacing: 0.1em;
+  color: rgba(27, 18, 48, 0.5);
+  min-width: 2.4em;
+}
+
+.wsi-board-name {
+  font-family: var(--font-wsi-display), Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(14px, 1.9vw, 30px);
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+
+.wsi-board-guess {
+  display: block;
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: 0.62em;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(27, 18, 48, 0.6);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.wsi-board-row.wsi-row-right {
+  background: var(--mint);
+}
+.wsi-board-row.wsi-row-wrong {
+  background: var(--dim);
+}
+
+.wsi-board-score {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wsi-board-dots {
+  display: flex;
+  gap: 3px;
+}
+.wsi-board-dot {
+  width: clamp(7px, 0.8vw, 13px);
+  height: clamp(7px, 0.8vw, 13px);
+  border: 2px solid var(--ink);
+  background: transparent;
+}
+.wsi-board-dot.wsi-on {
+  background: var(--pop);
+}
+
+.wsi-board-num {
+  font-family: var(--font-wsi-display), Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(15px, 2vw, 32px);
+  min-width: 1.6em;
+  text-align: right;
+  color: var(--ink);
+}
+
+/* ------------------------------------------------------------- progress ---- */
+
+.wsi-progress {
+  font-family: var(--font-wsi-util), ui-monospace, monospace;
+  font-size: clamp(13px, 1.8vw, 26px);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--paper);
+  text-align: center;
+}
+.wsi-progress strong {
+  color: var(--zap);
+}
+
+.wsi-pips {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.wsi-pip {
+  width: clamp(10px, 1.1vw, 16px);
+  height: clamp(10px, 1.1vw, 16px);
+  border: 3px solid var(--ink);
+  background: var(--paper);
+}
+.wsi-pip.wsi-on {
+  background: var(--mint);
+}
+
+/* ------------------------------------------------------------ end card ---- */
+
+.wsi-trophy {
+  font-size: clamp(44px, 8vw, 110px);
+  line-height: 1;
+}
+
+.wsi-winner {
+  font-family: var(--font-wsi-display), Impact, sans-serif;
+  font-weight: 400;
+  font-size: clamp(28px, 6vw, 76px);
+  line-height: 1;
+  margin: 0;
+  color: var(--ink);
+}
+
+.wsi-center {
+  text-align: center;
+}
+
+.wsi-muted {
+  font-style: italic;
+  font-size: clamp(15px, 1.7vw, 22px);
+  color: rgba(27, 18, 48, 0.7);
+  margin: 0;
+}
+
+.wsi-root :focus-visible {
+  outline: 4px solid var(--zap);
+  outline-offset: 3px;
+}
+
+/* -------------------------------------------------------------- narrow ---- */
+
+@media (max-width: 460px) {
+  .wsi-options {
+    grid-template-columns: 1fr;
+  }
+  .wsi-stamp {
+    right: 0;
+    bottom: -20px;
+    max-width: 88%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wsi-stamp {
+    animation: none;
+  }
+  .wsi-option,
+  .wsi-btn {
+    transition: none;
+  }
+}
